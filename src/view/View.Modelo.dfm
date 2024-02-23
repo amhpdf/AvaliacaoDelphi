@@ -216,10 +216,6 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
       OnClick = btnFecharClick
     end
   end
-  object FDQryConsultar: TFDQuery
-    Left = 304
-    Top = 224
-  end
   object dsConsultar: TDataSource
     Left = 304
     Top = 280

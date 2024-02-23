@@ -24,7 +24,7 @@ type
   end;
 
   const
-    BANCO_DADOS = 'C:\Desen\Delphi\iCarros\DB\icarros.fdb';
+    BANCO_DADOS = 'C:\Desen\Delphi\crud-01\AvaliacaoDelphi\db\PESSOAS.FDB';
 
 implementation
 

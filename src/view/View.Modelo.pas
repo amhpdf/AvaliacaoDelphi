@@ -1,4 +1,4 @@
-unit UntModelo;
+unit View.Modelo;
 
 interface
 
@@ -32,7 +32,6 @@ type
     pnlNavegador: TPanel;
     dbnGridConsultar: TDBNavigator;
     lblPesquisarCodigo: TLabel;
-    FDQryConsultar: TFDQuery;
     dsConsultar: TDataSource;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure pgcMainChange(Sender: TObject);

@@ -1,4 +1,4 @@
-unit UntPrincipal;
+unit View.Principal;
 
 interface
 
@@ -31,21 +31,24 @@ var
 
 implementation
 
+uses
+  View.PessoaFisica;
+
 
 {$R *.dfm}
 
 procedure TFrmPrincipal.actPFisicaExecute(Sender: TObject);
-//var
-//  FrmPessoaFisica: TFrmPessoaFisica;
+var
+  FrmPessoaFisica: TFrmCadastroCliente;
 begin
-//  FrmPessoaFisica := TFrmPessoaFisica.Create(nil);
-//
-//  try
-//    FrmPessoaFisica.ShowModal;
-//  finally
-//    if FrmPessoaFisica <> nil then
-//      FreeAndNil(FrmPessoaFisica);
-//  end;
+  FrmPessoaFisica := TFrmCadastroCliente.Create(nil);
+
+  try
+    FrmPessoaFisica.ShowModal;
+  finally
+    if FrmPessoaFisica <> nil then
+      FreeAndNil(FrmPessoaFisica);
+  end;
 end;
 
 procedure TFrmPrincipal.actSairExecute(Sender: TObject);

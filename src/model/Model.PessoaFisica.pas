@@ -3,7 +3,7 @@ unit Model.PessoaFisica;
 interface
 
 uses
-  Model.Interfaces;
+  Model.Interfaces, Dao.PessoaFisica, DB;
 
 type
   TModelPessoaFisica = class(TInterfacedObject, IModelPessoaFisica)
@@ -11,16 +11,20 @@ type
       FId: integer;
       FNome: string;
       FCPF: string;
+      FDAOPessoaFisica: TDAOPessoaFisica;
     public
-      constructor Create;
+      constructor Create(ADataSource: TDataSource);
       destructor Destroy; override;
-      class function New: IModelPessoaFisica;
+      class function New(ADataSource: TDataSource): IModelPessoaFisica;
       function Id(AValue: Integer): IModelPessoaFisica overload;
       function Id: integer; overload;
       function Nome(AValue: string): IModelPessoaFisica overload;
       function Nome: string; overload;
       function CPF(AValue: string): IModelPessoaFisica overload;
       function CPF: string; overload;
+
+      function Salvar: IModelPessoaFisica;
+      function ListarTodos: Boolean;
   end;
 
 implementation
@@ -39,13 +43,14 @@ begin
   Self.FCPF := AValue;
 end;
 
-constructor TModelPessoaFisica.Create;
+constructor TModelPessoaFisica.Create(ADataSource: TDataSource);
 begin
-  inherited;
+  FDAOPessoaFisica := TDAOPessoaFisica.Create(ADataSource);
 end;
 
 destructor TModelPessoaFisica.Destroy;
 begin
+  FDAOPessoaFisica.DisposeOf;
   inherited Destroy;
 end;
 
@@ -61,9 +66,14 @@ begin
   Result := Self.FId;
 end;
 
-class function TModelPessoaFisica.New: IModelPessoaFisica;
+function TModelPessoaFisica.ListarTodos: Boolean;
 begin
-  Result := Self.Create;
+  Result := FDAOPessoaFisica.ListarTodos;
+end;
+
+class function TModelPessoaFisica.New(ADataSource: TDataSource): IModelPessoaFisica;
+begin
+  Result := Self.Create(ADataSource);
 end;
 
 function TModelPessoaFisica.Nome(AValue: string): IModelPessoaFisica;
@@ -76,6 +86,12 @@ end;
 function TModelPessoaFisica.Nome: string;
 begin
   Result := Self.FNome;
+end;
+
+function TModelPessoaFisica.Salvar: IModelPessoaFisica;
+begin
+  Result := Self;
+  FDAOPessoaFisica.Salvar(Self);
 end;
 
 end.

@@ -102,29 +102,28 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="src\view\UntPrincipal.pas">
+        <DCCReference Include="src\view\View.Principal.pas">
             <Form>FrmPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="src\view\UntModelo.pas">
+        <DCCReference Include="src\view\View.Modelo.pas">
             <Form>FrmCadastroPadrao</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\model\Model.PessoaFisica.pas"/>
         <DCCReference Include="src\model\Model.PessoaJuridica.pas"/>
         <DCCReference Include="src\model\Model.Vinculo.pas"/>
-        <DCCReference Include="src\view\UntPFisica.pas">
+        <DCCReference Include="src\view\View.PessoaFisica.pas">
             <Form>FrmCadastroCliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\dao\UntConexao.pas"/>
-        <DCCReference Include="src\dao\dao.grupo.pas"/>
-        <DCCReference Include="src\controller\controller.grupo.pas"/>
-        <DCCReference Include="src\dao\dao.cliente.pas"/>
-        <DCCReference Include="src\controller\controller.cliente.pas"/>
-        <DCCReference Include="src\controller\controller.fornecedor.pas"/>
-        <DCCReference Include="src\dao\dao.fornecedor.pas"/>
+        <DCCReference Include="src\dao\Dao.PessoaFisica.pas"/>
+        <DCCReference Include="src\controller\Controller.PessoaFisica.pas"/>
+        <DCCReference Include="src\controller\Controller.PessoaJuridica.pas"/>
+        <DCCReference Include="src\dao\Dao.PessoaJuridica.pas"/>
         <DCCReference Include="src\model\Model.Interfaces.pas"/>
+        <DCCReference Include="src\controller\Controller.Interfaces.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

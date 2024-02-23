@@ -11,6 +11,9 @@ type
     function Nome: string; overload;
     function CPF(AValue: string): IModelPessoaFisica overload;
     function CPF: string; overload;
+
+    function Salvar: IModelPessoaFisica;
+    function ListarTodos: Boolean;
   end;
 
   IModelPessoaJuridica = interface

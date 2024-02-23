@@ -13,9 +13,9 @@ type
       constructor Create;
       destructor Destroy; override;
 
-      function Buscar(grupo: TGrupo): TGrupo;
-      procedure Salvar(grupo: TGrupo);
-      function ListarTodos: TObjectList<TGrupo>;
+//      function Buscar(grupo: TGrupo): TGrupo;
+//      procedure Salvar(grupo: TGrupo);
+//      function ListarTodos: TObjectList<TGrupo>;
   end;
 
 implementation

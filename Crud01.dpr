@@ -2,20 +2,19 @@ program Crud01;
 
 uses
   Vcl.Forms,
-  UntPrincipal in 'src\view\UntPrincipal.pas' {FrmPrincipal},
-  UntModelo in 'src\view\UntModelo.pas' {FrmCadastroPadrao},
+  View.Principal in 'src\view\View.Principal.pas' {FrmPrincipal},
+  View.Modelo in 'src\view\View.Modelo.pas' {FrmCadastroPadrao},
   Model.PessoaFisica in 'src\model\Model.PessoaFisica.pas',
   Model.PessoaJuridica in 'src\model\Model.PessoaJuridica.pas',
   Model.Vinculo in 'src\model\Model.Vinculo.pas',
-  UntPFisica in 'src\view\UntPFisica.pas' {FrmCadastroCliente},
+  View.PessoaFisica in 'src\view\View.PessoaFisica.pas' {FrmCadastroCliente},
   UntConexao in 'src\dao\UntConexao.pas',
-  dao.grupo in 'src\dao\dao.grupo.pas',
-  controller.grupo in 'src\controller\controller.grupo.pas',
-  dao.cliente in 'src\dao\dao.cliente.pas',
-  controller.cliente in 'src\controller\controller.cliente.pas',
-  controller.fornecedor in 'src\controller\controller.fornecedor.pas',
-  dao.fornecedor in 'src\dao\dao.fornecedor.pas',
-  Model.Interfaces in 'src\model\Model.Interfaces.pas';
+  Dao.PessoaFisica in 'src\dao\Dao.PessoaFisica.pas',
+  Controller.PessoaFisica in 'src\controller\Controller.PessoaFisica.pas',
+  Controller.PessoaJuridica in 'src\controller\Controller.PessoaJuridica.pas',
+  Dao.PessoaJuridica in 'src\dao\Dao.PessoaJuridica.pas',
+  Model.Interfaces in 'src\model\Model.Interfaces.pas',
+  Controller.Interfaces in 'src\controller\Controller.Interfaces.pas';
 
 {$R *.res}
 

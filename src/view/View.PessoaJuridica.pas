@@ -52,6 +52,7 @@ type
     procedure btnIncluirClick(Sender: TObject);
     procedure pgcMainChange(Sender: TObject);
     procedure dsConsultarDataChange(Sender: TObject; Field: TField);
+    procedure btnImprimirClick(Sender: TObject);
   private
     { Private declarations }
     FControllerPessoaJuridica: IControllerPessoaJuridica;
@@ -65,6 +66,9 @@ var
 
 implementation
 
+uses
+  View.Listagem;
+
 {$R *.dfm}
 
 procedure TFrmCadastroPessoaJuridica.btnIncluirClick(Sender: TObject);
@@ -76,23 +80,37 @@ begin
 end;
 
 procedure TFrmCadastroPessoaJuridica.btnSalvarClick(Sender: TObject);
-var
-  i: integer;
 begin
-  FControllerPessoaJuridica
-    .Id(0)
-    .Nome(edtNome.Text)
-    .CNPJ(edtCNPJ.Text)
-    .Endereco(edtEndereco.Text)
-    .Bairro(edtBairro.Text)
-    .Cidade(edtCidade.Text)
-    .UF(edtUF.Text)
-    .Cep(edtCep.Text)
-    .EMail(edtEmail.Text)
-    .Telefone(edtTelefone.Text)
-    .Celular(edtCelular.Text)
-    .Salvar
-    .ListarTodos;
+  if FOperacao = opIncluir then
+    FControllerPessoaJuridica
+      .Id(0)
+      .Nome(edtNome.Text)
+      .CNPJ(edtCNPJ.Text)
+      .Endereco(edtEndereco.Text)
+      .Bairro(edtBairro.Text)
+      .Cidade(edtCidade.Text)
+      .UF(edtUF.Text)
+      .Cep(edtCep.Text)
+      .EMail(edtEmail.Text)
+      .Telefone(edtTelefone.Text)
+      .Celular(edtCelular.Text)
+      .Salvar
+      .ListarTodos
+  else
+    FControllerPessoaJuridica
+      .Id(0)
+      .Nome(edtNome.Text)
+      .CNPJ(edtCNPJ.Text)
+      .Endereco(edtEndereco.Text)
+      .Bairro(edtBairro.Text)
+      .Cidade(edtCidade.Text)
+      .UF(edtUF.Text)
+      .Cep(edtCep.Text)
+      .EMail(edtEmail.Text)
+      .Telefone(edtTelefone.Text)
+      .Celular(edtCelular.Text)
+      .Alterar
+      .ListarTodos;
 
   inherited;
 end;
@@ -128,6 +146,40 @@ begin
   inherited;
   edtIdPessoaJuridica.Text := dsConsultar.DataSet.FieldByName('id').AsString;
   edtNomePessoaJuridica.Text := dsConsultar.DataSet.FieldByName('nome').AsString;
+
+  edtId.Text := dsConsultar.DataSet.FieldByName('id').AsString;
+  edtNome.Text := dsConsultar.DataSet.FieldByName('nome').AsString;
+  edtCNPJ.Text := dsConsultar.DataSet.FieldByName('cnpj').AsString;
+  edtEndereco.Text := dsConsultar.DataSet.FieldByName('endereco').AsString;
+  edtBairro.Text := dsConsultar.DataSet.FieldByName('bairro').AsString;
+  edtCidade.Text := dsConsultar.DataSet.FieldByName('cidade').AsString;
+  edtUF.Text := dsConsultar.DataSet.FieldByName('uf').AsString;
+  edtCep.Text := dsConsultar.DataSet.FieldByName('cep').AsString;
+  edtEmail.Text := dsConsultar.DataSet.FieldByName('email').AsString;
+  edtTelefone.Text := dsConsultar.DataSet.FieldByName('telefone').AsString;
+  edtCelular.Text := dsConsultar.DataSet.FieldByName('celular').AsString;
+end;
+
+procedure TFrmCadastroPessoaJuridica.btnImprimirClick(Sender: TObject);
+var
+  FrmListagem: TFrmListagem;
+begin
+  FrmListagem := TFrmListagem.Create(nil);
+
+  try
+    FrmListagem.qrlTitulo.Caption := 'Listagem de Pessoas Jurídicas';
+    FrmListagem.qrListagem.DataSet := dsConsultar.DataSet;
+    FrmListagem.qrlTipoDoc.Caption := 'CNPJ';
+    FrmListagem.qrdbtDocumento.DataSet := dsConsultar.DataSet;
+    FrmListagem.qrdbtDocumento.DataField := 'CNPJ';
+    FrmListagem.qrdbtNome.DataSet := dsConsultar.DataSet;
+    FrmListagem.qrdbtNome.DataField := 'NOME';
+
+    FrmListagem.qrListagem.Preview;
+  finally
+    if FrmListagem <> nil then
+      FreeAndNil(FrmListagem);
+  end;
 end;
 
 end.

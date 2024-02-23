@@ -4,7 +4,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
   TextHeight = 13
   inherited pnlcontainer: TPanel
     inherited pgcMain: TPageControl
-      ActivePage = tsVinculo
+      ActivePage = tsEdit
       inherited tsConsulta: TTabSheet
         inherited pnlMainConsultar: TPanel
           inherited pnlNavegador: TPanel
@@ -300,6 +300,11 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
           end
         end
       end
+    end
+  end
+  inherited pnlBottuns: TPanel
+    inherited btnImprimir: TButton
+      OnClick = btnImprimirClick
     end
   end
   inherited dsConsultar: TDataSource

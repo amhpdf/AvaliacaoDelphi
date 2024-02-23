@@ -86,7 +86,7 @@ begin
 
     Result := FDQryPessoaFisica.IsEmpty;
   finally
-//    FDQryPessoaFisica.Close;
+    //FDQryPessoaFisica.Close;
   end;
 end;
 

@@ -3,7 +3,7 @@ unit Model.PessoaJuridica;
 interface
 
 uses
-  Model.Interfaces;
+  Model.Interfaces, Dao.PessoaJuridica, DB;
 
 type
   TModelPessoaJuridica = class(TInterfacedObject, IModelPessoaJuridica)
@@ -19,10 +19,11 @@ type
       FEmail: string;
       FTelefone: string;
       FCelular: string;
+      FDAOPessoaJuridica : TDAOPessoaJuridica;
     public
-      constructor Create;
+      constructor Create(ADataSource: TDataSource);
       destructor Destroy; override;
-      class function New: IModelPessoaJuridica;
+      class function New(ADataSource: TDataSource): IModelPessoaJuridica;
 
       function Id(AValue: Integer): IModelPessoaJuridica overload;
       function Id: integer; overload;
@@ -46,65 +47,51 @@ type
       function Telefone: string; overload;
       function Celular(AValue: string): IModelPessoaJuridica overload;
       function Celular: string; overload;
+
+      function Salvar: IModelPessoaJuridica;
+      function ListarTodos: Boolean;
   end;
 
 implementation
 
 { TModelPessoaJuridica }
 
-function TModelPessoaJuridica.Bairro: string;
+constructor TModelPessoaJuridica.Create(ADataSource: TDataSource);
 begin
-  Result := Self.FBairro;
+  FDAOPessoaJuridica := TDAOPessoaJuridica.Create(ADataSource);
 end;
 
-function TModelPessoaJuridica.Bairro(AValue: string): IModelPessoaJuridica;
+destructor TModelPessoaJuridica.Destroy;
+begin
+  FDAOPessoaJuridica.DisposeOf;
+  inherited Destroy;
+end;
+
+class function TModelPessoaJuridica.New(ADataSource: TDataSource): IModelPessoaJuridica;
+begin
+  Result := Self.Create(ADataSource);
+end;
+
+function TModelPessoaJuridica.Id: integer;
+begin
+  Result := Self.FId;
+end;
+
+function TModelPessoaJuridica.Id(AValue: Integer): IModelPessoaJuridica;
 begin
   Result := Self;
-
-  Self.FBairro := AValue;
+  Self.FId := AValue;
 end;
 
-function TModelPessoaJuridica.Celular(AValue: string): IModelPessoaJuridica;
+function TModelPessoaJuridica.Nome: string;
+begin
+  Result := Self.FNome;
+end;
+
+function TModelPessoaJuridica.Nome(AValue: string): IModelPessoaJuridica;
 begin
   Result := Self;
-
-  Self.FCelular := AValue;
-end;
-
-function TModelPessoaJuridica.Celular: string;
-begin
-  Result := Self.FCelular;
-end;
-
-function TModelPessoaJuridica.Cep: string;
-begin
-  Result := Self.FCep;
-end;
-
-function TModelPessoaJuridica.Cep(AValue: string): IModelPessoaJuridica;
-begin
-  Result := Self;
-
-  Self.FCep := AValue;
-end;
-
-function TModelPessoaJuridica.Cidade(AValue: string): IModelPessoaJuridica;
-begin
-  Result := Self;
-
-  Self.FCep := AValue;
-end;
-
-function TModelPessoaJuridica.Cidade: string;
-begin
-  Result := Self.FCidade;
-end;
-
-function TModelPessoaJuridica.CNPJ(AValue: string): IModelPessoaJuridica;
-begin
-  Result := Self;
-
-  Self.FCep := AValue;
+  Self.FNome := AValue;
 end;
 
 function TModelPessoaJuridica.CNPJ: string;
@@ -112,26 +99,10 @@ begin
   Result := Self.FCNPJ;
 end;
 
-constructor TModelPessoaJuridica.Create;
-begin
-end;
-
-destructor TModelPessoaJuridica.Destroy;
-begin
-
-  inherited Destroy;
-end;
-
-function TModelPessoaJuridica.EMail(AValue: string): IModelPessoaJuridica;
+function TModelPessoaJuridica.CNPJ(AValue: string): IModelPessoaJuridica;
 begin
   Result := Self;
-
-  Self.FEmail := AValue;
-end;
-
-function TModelPessoaJuridica.EMail: string;
-begin
-  Result := Self.FEmail;
+  Self.FCNPJ := AValue;
 end;
 
 function TModelPessoaJuridica.Endereco: string;
@@ -142,49 +113,29 @@ end;
 function TModelPessoaJuridica.Endereco(AValue: string): IModelPessoaJuridica;
 begin
   Result := Self;
-
   Self.FEndereco := AValue;
 end;
 
-function TModelPessoaJuridica.Id(AValue: Integer): IModelPessoaJuridica;
+function TModelPessoaJuridica.Bairro: string;
+begin
+  Result := Self.FBairro;
+end;
+
+function TModelPessoaJuridica.Bairro(AValue: string): IModelPessoaJuridica;
 begin
   Result := Self;
-
-  Self.FId := AValue;
+  Self.FBairro := AValue;
 end;
 
-function TModelPessoaJuridica.Id: integer;
-begin
-  Result := Self.FId;
-end;
-
-class function TModelPessoaJuridica.New: IModelPessoaJuridica;
-begin
-  Result := Self.Create;
-end;
-
-function TModelPessoaJuridica.Nome(AValue: string): IModelPessoaJuridica;
+function TModelPessoaJuridica.Cidade(AValue: string): IModelPessoaJuridica;
 begin
   Result := Self;
-
-  Self.FNome := AValue;
+  Self.FCep := AValue;
 end;
 
-function TModelPessoaJuridica.Nome: string;
+function TModelPessoaJuridica.Cidade: string;
 begin
-  Result := Self.FNome;
-end;
-
-function TModelPessoaJuridica.Telefone(AValue: string): IModelPessoaJuridica;
-begin
-  Result := Self;
-
-  Self.FTelefone := AValue;
-end;
-
-function TModelPessoaJuridica.Telefone: string;
-begin
-  Result := Self.FTelefone;
+  Result := Self.FCidade;
 end;
 
 function TModelPessoaJuridica.UF: string;
@@ -195,8 +146,62 @@ end;
 function TModelPessoaJuridica.UF(AValue: string): IModelPessoaJuridica;
 begin
   Result := Self;
-
   Self.FUF := AValue;
+end;
+
+function TModelPessoaJuridica.Cep: string;
+begin
+  Result := Self.FCep;
+end;
+
+function TModelPessoaJuridica.Cep(AValue: string): IModelPessoaJuridica;
+begin
+  Result := Self;
+  Self.FCep := AValue;
+end;
+
+function TModelPessoaJuridica.EMail: string;
+begin
+  Result := Self.FEmail;
+end;
+
+function TModelPessoaJuridica.EMail(AValue: string): IModelPessoaJuridica;
+begin
+  Result := Self;
+  Self.FEmail := AValue;
+end;
+
+function TModelPessoaJuridica.Telefone: string;
+begin
+  Result := Self.FTelefone;
+end;
+
+function TModelPessoaJuridica.Telefone(AValue: string): IModelPessoaJuridica;
+begin
+  Result := Self;
+  Self.FTelefone := AValue;
+end;
+
+function TModelPessoaJuridica.Celular: string;
+begin
+  Result := Self.FCelular;
+end;
+
+function TModelPessoaJuridica.Celular(AValue: string): IModelPessoaJuridica;
+begin
+  Result := Self;
+  Self.FCelular := AValue;
+end;
+
+function TModelPessoaJuridica.ListarTodos: Boolean;
+begin
+  Result := FDAOPessoaJuridica.ListarTodos;
+end;
+
+function TModelPessoaJuridica.Salvar: IModelPessoaJuridica;
+begin
+  Result := Self;
+  FDAOPessoaJuridica.Salvar(Self);
 end;
 
 end.

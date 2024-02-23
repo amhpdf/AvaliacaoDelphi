@@ -11,118 +11,118 @@ uses
   Data.DB, FireDAC.Comp.Client, FireDAC.DApt,
   FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB,
 
-  UntConexao, Model.PessoaJuridica;
+  UntConexao, Model.Interfaces;
 
 type
-  TFornecedorDAO = class
+  TDAOPessoaJuridica = class
     private
       FConexao: TConexao;
-      FDQryFornecedor: TFDQuery;
+      FDQryPessoaJuridica: TFDQuery;
+      FDataSource: TDataSource;
     public
-      constructor Create;
+      constructor Create(ADataSource: TDataSource);
       destructor Destroy; override;
 
-//      function Buscar(fornecedor: TFornecedor): TFornecedor;
-//      procedure Salvar(fornecedor: TFornecedor);
-//      function ListarTodos: TObjectList<TFornecedor>;
+     function Buscar(APessoaJuridica: IModelPessoaJuridica): IModelPessoaJuridica;
+     procedure Salvar(APessoaJuridica: IModelPessoaJuridica);
+     function ListarTodos: Boolean;
   end;
 
 implementation
 
-{ TFornecedorDAO }
+{ TDAOPessoaJuridica }
 
-constructor TFornecedorDAO.Create;
+constructor TDAOPessoaJuridica.Create;
 begin
   FConexao := TConexao.Create;
 
-  FDQryFornecedor := TFDQuery.Create(nil);
-  FDQryFornecedor.Connection := FConexao.GetConexao;
+  FDQryPessoaJuridica := TFDQuery.Create(nil);
+  FDQryPessoaJuridica.Connection := FConexao.GetConexao;
 end;
 
-destructor TFornecedorDAO.Destroy;
+destructor TDAOPessoaJuridica.Destroy;
 begin
   inherited Destroy;
 end;
 
-//function TFornecedorDAO.Buscar(fornecedor: TFornecedor): TFornecedor;
-//begin
-//  Result := nil;
-//
-//  try
-//    FDQryFornecedor.Close;
-//    FDQryFornecedor.SQL.Clear;
-//    FDQryFornecedor.SQL.Add('SELECT f.nome, f.cpf, f.telefone');
-//    FDQryFornecedor.SQL.Add('  FROM fornecedor f');
-//    FDQryFornecedor.SQL.Add(' WHERE f.id = :idFornecedor');
-//    FDQryFornecedor.ParamByName('idFornecedor').AsInteger := fornecedor.Id;
-//    FDQryFornecedor.Open;
-//
-//    if not (FDQryFornecedor.IsEmpty) then
-//    begin
-//      fornecedor.Nome := FDQryFornecedor.FieldByName('nome').AsString;
-//      fornecedor.CNPJ := FDQryFornecedor.FieldByName('cpf').AsString;
-//      fornecedor.Telefone := FDQryFornecedor.FieldByName('telefone').AsString;
-//
-//      Result := fornecedor;
-//    end;
-//  finally
-//    FDQryFornecedor.Close;
-//  end;
-//end;
+function TDAOPessoaJuridica.Buscar(APessoaJuridica: IModelPessoaJuridica): IModelPessoaJuridica;
+begin
+  Result := nil;
 
-//function TFornecedorDAO.ListarTodos: TObjectList<TFornecedor>;
-//var
-//  fornecedor: TFornecedor;
-//begin
-//  Result := nil;
-//
-//  try
-//    FDQryFornecedor.Close;
-//    FDQryFornecedor.SQL.Clear;
-//    FDQryFornecedor.SQL.Add('SELECT f.id, f.nome, f.cnpj, f.telefone');
-//    FDQryFornecedor.SQL.Add('  FROM fornecedor f');
-//    FDQryFornecedor.SQL.Add(' ORDER BY f.id');
-//    FDQryFornecedor.Open;
-//
-//    if not (FDQryFornecedor.IsEmpty) then
-//    begin
-//      FDQryFornecedor.First;
-//      while not FDQryFornecedor.Eof do
-//      begin
-//        fornecedor := TFornecedor.Create;
-//        fornecedor.Id := FDQryFornecedor.FieldByName('id').AsInteger;
-//        fornecedor.Nome := FDQryFornecedor.FieldByName('nome').AsString;
-//        fornecedor.CNPJ := FDQryFornecedor.FieldByName('cnpj').AsString;
-//        fornecedor.Telefone := FDQryFornecedor.FieldByName('telefone').AsString;
-//
-//        Result.Add(fornecedor);
-//
-//        FDQryFornecedor.Next;
-//      end;
-//    end;
-//  finally
-//    if Assigned(fornecedor) then
-//      FreeAndNil(fornecedor);
-//
-//    FDQryFornecedor.Close;
-//  end;
-//end;
+  try
+    FDQryPessoaJuridica.Close;
+    FDQryPessoaJuridica.SQL.Clear;
+    FDQryPessoaJuridica.SQL.Add('SELECT pj.id, pj.nome, pj.cnpj, pj.endereco, pj.bairro,');
+    FDQryPessoaJuridica.SQL.Add('       pj.cidade, pj.uf, pj.cep, pj.email, pj.telefone, pj.celular');
+    FDQryPessoaJuridica.SQL.Add('  FROM PJuridica pj');
+    FDQryPessoaJuridica.SQL.Add(' WHERE pj.id = :idPessoaJuridica');
+    FDQryPessoaJuridica.ParamByName('idPessoaJuridica').AsInteger := APessoaJuridica.Id;
+    FDQryPessoaJuridica.Open;
 
-//procedure TFornecedorDAO.Salvar(fornecedor: TFornecedor);
-//begin
-//  try
-//    FDQryFornecedor.Close;
-//    FDQryFornecedor.SQL.Clear;
-//    FDQryFornecedor.SQL.Add('INSERT INTO fornecedor (nome, cnpj, telefone)');
-//    FDQryFornecedor.SQL.Add('           VALUES (:nome, :cnpj, :telefone)');
-//    FDQryFornecedor.ParamByName('nome').AsString := fornecedor.Nome;
-//    FDQryFornecedor.ParamByName('cnpj').AsString := fornecedor.CNPJ;
-//    FDQryFornecedor.ParamByName('telefone').AsString := fornecedor.Telefone;
-//    FDQryFornecedor.ExecSQL;
-//  finally
-//    FDQryFornecedor.Close;
-//  end;
-//end;
+    if not (FDQryPessoaJuridica.IsEmpty) then
+    begin
+      APessoaJuridica
+        .Nome(FDQryPessoaJuridica.FieldByName('nome').AsString)
+        .CNPJ(FDQryPessoaJuridica.FieldByName('cnpj').AsString)
+        .Endereco(FDQryPessoaJuridica.FieldByName('endereco').AsString)
+        .Bairro(FDQryPessoaJuridica.FieldByName('bairro').AsString)
+        .Cidade(FDQryPessoaJuridica.FieldByName('cidade').AsString)
+        .UF(FDQryPessoaJuridica.FieldByName('uf').AsString)
+        .Cep(FDQryPessoaJuridica.FieldByName('cep').AsString)
+        .Email(FDQryPessoaJuridica.FieldByName('email').AsString)
+        .Telefone(FDQryPessoaJuridica.FieldByName('telefone').AsString)
+        .Celular(FDQryPessoaJuridica.FieldByName('celular').AsString);
+
+      Result := APessoaJuridica;
+    end;
+  finally
+    FDQryPessoaJuridica.Close;
+  end;
+end;
+
+function TDAOPessoaJuridica.ListarTodos: Boolean;
+begin
+ Result := False;
+
+  try
+    FDQryPessoaJuridica.Close;
+    FDQryPessoaJuridica.SQL.Clear;
+    FDQryPessoaJuridica.SQL.Add('SELECT pj.id, pj.nome, pj.cnpj, pj.endereco, pj.bairro,');
+    FDQryPessoaJuridica.SQL.Add('       pj.cidade, pj.uf, pj.cep, pj.email, pj.telefone, pj.celular');
+    FDQryPessoaJuridica.SQL.Add('  FROM PJuridica pj');
+    FDQryPessoaJuridica.SQL.Add(' ORDER BY pj.id');
+    FDQryPessoaJuridica.Open;
+
+    Result := FDQryPessoaJuridica.IsEmpty;
+  finally
+    //FDQryPessoaJuridica.Close;
+  end;
+end;
+
+procedure TDAOPessoaJuridica.Salvar(APessoaJuridica: IModelPessoaJuridica);
+begin
+  try
+    FDQryPessoaJuridica.Close;
+    FDQryPessoaJuridica.SQL.Clear;
+    FDQryPessoaJuridica.SQL.Add('INSERT INTO PessoaJuridica (nome, cnpj, endereco, bairro, ');
+    FDQryPessoaJuridica.SQL.Add('                 cidade, uf, cep, email, telefone, celular');
+    FDQryPessoaJuridica.SQL.Add('     VALUES (:nome, :cnpj, :endereco, :bairro, :cidade, :uf,');
+    FDQryPessoaJuridica.SQL.Add('             :cep, :email, :telefone, :celular)');
+    FDQryPessoaJuridica.ParamByName('nome').AsString := APessoaJuridica.Nome;
+    FDQryPessoaJuridica.ParamByName('cnpj').AsString := APessoaJuridica.CNPJ;
+    FDQryPessoaJuridica.ParamByName('endereco').AsString := APessoaJuridica.Endereco;
+    FDQryPessoaJuridica.ParamByName('bairro').AsString := APessoaJuridica.Bairro;
+    FDQryPessoaJuridica.ParamByName('cidade').AsString := APessoaJuridica.Cidade;
+    FDQryPessoaJuridica.ParamByName('uf').AsString := APessoaJuridica.UF;
+    FDQryPessoaJuridica.ParamByName('cep').AsString := APessoaJuridica.Cep;
+    FDQryPessoaJuridica.ParamByName('email').AsString := APessoaJuridica.Email;
+    FDQryPessoaJuridica.ParamByName('telefone').AsString := APessoaJuridica.Telefone;
+    FDQryPessoaJuridica.ParamByName('celular').AsString := APessoaJuridica.Celular;
+    FDQryPessoaJuridica.ExecSQL;
+  finally
+    FDQryPessoaJuridica.Close;
+  end;
+end;
 
 end.
 

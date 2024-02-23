@@ -15,6 +15,7 @@ object FrmPrincipal: TFrmPrincipal
   OldCreateOrder = False
   Position = poScreenCenter
   WindowState = wsMaximized
+  OnCloseQuery = FormCloseQuery
   OnKeyPress = FormKeyPress
   PixelsPerInch = 96
   TextHeight = 13
@@ -29,6 +30,7 @@ object FrmPrincipal: TFrmPrincipal
     object actPJuridica: TAction
       Category = 'Cadastros'
       Caption = '&Pessoa Jur'#237'dica'
+      OnExecute = actPJuridicaExecute
     end
     object actSair: TAction
       Caption = '&Sair'

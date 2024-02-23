@@ -13,6 +13,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnShow = FormShow
   PixelsPerInch = 96
@@ -36,7 +37,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
       TabOrder = 0
       OnChange = pgcMainChange
       object tsConsulta: TTabSheet
-        Caption = '&Consulta'
+        Caption = '&Consultar'
         object pnlMainConsultar: TPanel
           Left = 0
           Top = 0
@@ -75,7 +76,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
             end
             object btnPesquisar: TButton
               Left = 405
-              Top = 2
+              Top = 4
               Width = 75
               Height = 29
               Anchors = [akTop, akRight]
@@ -83,7 +84,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
               TabOrder = 1
             end
           end
-          object dbbGridConsultar: TDBGrid
+          object dbgConsultar: TDBGrid
             Left = 0
             Top = 41
             Width = 492
@@ -113,6 +114,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
               Top = 4
               Width = 224
               Height = 27
+              DataSource = dsConsultar
               VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
               Anchors = [akTop, akRight]
               TabOrder = 0
@@ -121,7 +123,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
         end
       end
       object tsEdit: TTabSheet
-        Caption = '&Edit'
+        Caption = '&Editar'
         ImageIndex = 1
         object pnlMainEditar: TPanel
           Left = 0
@@ -167,6 +169,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
       Align = alTop
       Caption = '&Alterar'
       TabOrder = 1
+      OnClick = btnAlterarClick
     end
     object btnExcluir: TButton
       AlignWithMargins = True
@@ -189,6 +192,7 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
       Align = alTop
       Caption = '&Cancelar'
       TabOrder = 3
+      OnClick = btnCancelarClick
     end
     object btnSalvar: TButton
       AlignWithMargins = True
@@ -214,6 +218,19 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
       Caption = '&Fechar'
       TabOrder = 5
       OnClick = btnFecharClick
+    end
+    object btnImprimir: TButton
+      AlignWithMargins = True
+      Left = 3
+      Top = 206
+      Width = 109
+      Height = 30
+      Margins.Right = 8
+      Margins.Bottom = 4
+      Align = alTop
+      Caption = '&Imprimir'
+      TabOrder = 6
+      ExplicitTop = 407
     end
   end
   object dsConsultar: TDataSource

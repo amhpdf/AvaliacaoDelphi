@@ -5,26 +5,28 @@ interface
 uses
   Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes, System.UITypes,
+
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Modelo, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.ExtCtrls, Data.DB, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+
   Controller.Interfaces, Controller.PessoaFisica;
 
 type
-  TFrmCadastroCliente = class(TFrmCadastroPadrao)
+  TFrmCadastroPessoaFisica = class(TFrmCadastroPadrao)
     lblDesc: TLabel;
     lblCodigo: TLabel;
-    edtCodigo: TEdit;
+    edtId: TEdit;
     edtNome: TEdit;
     lblCPF: TLabel;
     edtCPF: TEdit;
-    edtTelefone: TEdit;
-    lblTelefone: TLabel;
     procedure btnIncluirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure dsConsultarDataChange(Sender: TObject; Field: TField);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
   private
     { Private declarations }
     FControllerPessoaFisica: IControllerPessoaFisica;
@@ -33,36 +35,112 @@ type
   end;
 
 var
-  FrmCadastroCliente: TFrmCadastroCliente;
+  FrmCadastroPessoaFisica: TFrmCadastroPessoaFisica;
 
 implementation
+
+uses
+  View.Listagem;
 
 {$R *.dfm}
 
 
-procedure TFrmCadastroCliente.btnIncluirClick(Sender: TObject);
+procedure TFrmCadastroPessoaFisica.FormCreate(Sender: TObject);
 begin
   inherited;
 
-  pgcMain.ActivePageIndex := 1;
+  FControllerPessoaFisica := TControllerPessoaFisica.New(dsConsultar);
+  FControllerPessoaFisica.ListarTodos;
+end;
+
+procedure TFrmCadastroPessoaFisica.btnPesquisarClick(Sender: TObject);
+begin
+  inherited;
+
+  if StrToIntDef(edtPesquisar.Text, 0) > 0 then
+    FControllerPessoaFisica
+      .BuscaPorId(StrToIntDef(edtPesquisar.Text, 0))
+  else
+    FControllerPessoaFisica
+      .ListarTodos;
+end;
+
+procedure TFrmCadastroPessoaFisica.btnIncluirClick(Sender: TObject);
+begin
+  inherited;
+
+  edtId.Enabled := False;
   edtNome.SetFocus;
 end;
 
-procedure TFrmCadastroCliente.btnSalvarClick(Sender: TObject);
+procedure TFrmCadastroPessoaFisica.btnAlterarClick(Sender: TObject);
 begin
-  FControllerPessoaFisica
-    .Id(0)
-    .Nome(edtNome.Text)
-    .CPF(edtCPF.Text)
-    .Salvar;
+  inherited;
+
+  edtId.Enabled := False;
+  edtNome.SetFocus;
+end;
+
+procedure TFrmCadastroPessoaFisica.btnExcluirClick(Sender: TObject);
+begin
+  if Application.MessageBox('Confirma Exclusão' , 'Atenção !!!', MB_ICONQUESTION + MB_YESNO + MB_DEFBUTTON2) = mrYes then
+  begin
+    FControllerPessoaFisica
+      .Excluir(StrToIntDef(edtId.Text, 0))
+      .ListarTodos;
+  end;
 
   inherited;
 end;
 
-procedure TFrmCadastroCliente.FormCreate(Sender: TObject);
+procedure TFrmCadastroPessoaFisica.btnSalvarClick(Sender: TObject);
 begin
-  FControllerPessoaFisica := TControllerPessoaFisica.New(dsConsultar);
-  FControllerPessoaFisica.ListarTodos;
+  if (FOperacao = opIncluir) then
+    FControllerPessoaFisica
+      .Id(StrToIntDef(edtId.Text, 0))
+      .Nome(edtNome.Text)
+      .CPF(edtCPF.Text)
+      .Salvar
+      .ListarTodos
+  else
+    FControllerPessoaFisica
+      .Id(StrToIntDef(edtId.Text, 0))
+      .Nome(edtNome.Text)
+      .CPF(edtCPF.Text)
+      .Alterar
+      .ListarTodos;
+
+  inherited;
+end;
+
+procedure TFrmCadastroPessoaFisica.dsConsultarDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  edtId.Text := dsConsultar.DataSet.FieldByName('id').AsString;
+  edtNome.Text := dsConsultar.DataSet.FieldByName('nome').AsString;
+  edtCPF.Text := dsConsultar.DataSet.FieldByName('cpf').AsString;
+end;
+
+procedure TFrmCadastroPessoaFisica.btnImprimirClick(Sender: TObject);
+var
+  FrmListagem: TFrmListagem;
+begin
+  FrmListagem := TFrmListagem.Create(nil);
+
+  try
+    FrmListagem.qrlTitulo.Caption := 'Listagem de Pessoas Física';
+    FrmListagem.qrListagem.DataSet := dsConsultar.DataSet;
+    FrmListagem.qrlTipoDoc.Caption := 'CPF';
+    FrmListagem.qrdbtDocumento.DataSet := dsConsultar.DataSet;
+    FrmListagem.qrdbtDocumento.DataField := 'CPF';
+    FrmListagem.qrdbtNome.DataSet := dsConsultar.DataSet;
+    FrmListagem.qrdbtNome.DataField := 'NOME';
+
+    FrmListagem.qrListagem.Preview;
+  finally
+    if FrmListagem <> nil then
+      FreeAndNil(FrmListagem);
+  end;
 end;
 
 end.

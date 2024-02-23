@@ -13,7 +13,10 @@ type
     function CPF: string; overload;
 
     function Salvar: IModelPessoaFisica;
-    function ListarTodos: Boolean;
+    function ListarTodos: IModelPessoaFisica;
+    function BuscarPorId(AValue: integer) : IModelPessoaFisica;
+    function Alterar: IModelPessoaFisica;
+    function Excluir(AValue: Integer): IModelPessoaFisica;
   end;
 
   IModelPessoaJuridica = interface
@@ -40,6 +43,12 @@ type
     function Telefone: string; overload;
     function Celular(AValue: string): IModelPessoaJuridica overload;
     function Celular: string; overload;
+
+    function Salvar: IModelPessoaJuridica;
+    function ListarTodos: IModelPessoaJuridica;
+    function BuscarPorId(AValue: integer) : IModelPessoaJuridica;
+    function Alterar: IModelPessoaJuridica;
+    function Excluir(AValue: Integer): IModelPessoaJuridica;
   end;
 
 implementation

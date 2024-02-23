@@ -12,9 +12,11 @@ type
     function CPF(AValue: string): IControllerPessoaFisica overload;
     function CPF: string; overload;
 
-    function BuscaPorId(AId: Integer): Boolean;
-    function ListarTodos: Boolean;
+    function BuscaPorId(AId: Integer): IControllerPessoaFisica;
+    function ListarTodos: IControllerPessoaFisica;
     function Salvar: IControllerPessoaFisica;
+    function Alterar: IConTrollerPessoaFisica;
+    function Excluir(AValue: Integer): IControllerPessoaFisica;
   end;
 
   IControllerPessoaJuridica = interface
@@ -42,9 +44,11 @@ type
     function Celular(AValue: string): IControllerPessoaJuridica overload;
     function Celular: string; overload;
 
-    function BuscaPorId(AId: Integer): Boolean;
-    function ListarTodos: Boolean;
+    function BuscarPorId(AValue: Integer): IControllerPessoaJuridica;
     function Salvar: IControllerPessoaJuridica;
+    function ListarTodos: IControllerPessoaJuridica;
+    function Alterar: IControllerPessoaJuridica;
+    function Excluir(AValue: Integer): IControllerPessoaJuridica;
   end;
 
 implementation

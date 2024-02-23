@@ -3,8 +3,7 @@ unit Controller.PessoaJuridica;
 interface
 
 uses System.SysUtils, System.Generics.Collections, FireDAC.Comp.Client,
-     DB, 
-     Dao.PessoaJuridica, 
+     DB,
      Controller.Interfaces, Model.Interfaces, Model.PessoaJuridica;
 
 type
@@ -13,17 +12,6 @@ type
       //FDAOPessoaJuridica = TDAOPessoaJuridica;
       FDataSource: TDataSource;
       FModelPessoaJuridica: IModelPessoaJuridica;
-      function Bairro(AValue: String): IControllerPessoaJuridica;
-      function Celular(AValue: String): IControllerPessoaJuridica;
-      function Cep(AValue: String): IControllerPessoaJuridica;
-      function Cidade(AValue: String): IControllerPessoaJuridica;
-      function CNPJ(AValue: String): IControllerPessoaJuridica;
-      function Email(AValue: String): IControllerPessoaJuridica;
-      function Endereco(AValue: String): IControllerPessoaJuridica;
-      function Id(AValue: Integer): IControllerPessoaJuridica;
-      function Nome(AValue: String): IControllerPessoaJuridica;
-      function Telefone(AValue: String): IControllerPessoaJuridica;
-      function UF(AValue: String): IControllerPessoaJuridica;
     public
       constructor Create(ADataSource: TDataSource);
       destructor Destroy; override;
@@ -52,9 +40,11 @@ type
       function Celular(AValue: string): IControllerPessoaJuridica overload;
       function Celular: string; overload;
 
-      function BuscaPorId(AId: Integer): Boolean;
-      function ListarTodos: Boolean;
+      function BuscarPorId(AValue: Integer): IControllerPessoaJuridica;
       function Salvar: IControllerPessoaJuridica;
+      function ListarTodos: IControllerPessoaJuridica;
+      function Alterar: IControllerPessoaJuridica;
+      function Excluir(AValue: Integer): IControllerPessoaJuridica;
   end;
 
 implementation
@@ -77,10 +67,9 @@ begin
   Result := Self.Create(ADataSource);
 end;
 
-function TControllerPessoaJuridica.Nome(
-  AValue: String): IControllerPessoaJuridica;
+function TControllerPessoaJuridica.Id: Integer;
 begin
-
+  Result := FModelPessoaJuridica.Id;
 end;
 
 function TControllerPessoaJuridica.Id(AValue: Integer): IControllerPessoaJuridica;
@@ -91,24 +80,18 @@ end;
 
 function TControllerPessoaJuridica.Nome: String;
 begin
-
+  Result := FModelPessoaJuridica.Nome;
 end;
 
 function TControllerPessoaJuridica.Nome(AValue: String): IControllerPessoaJuridica;
 begin
   Result := Self;
-  FModelPessoaJuridica.Nome(AValue);
-end;
-
-function TControllerPessoaJuridica.Telefone(
-  AValue: String): IControllerPessoaJuridica;
-begin
-
+  FModelPessoaJuridica.Nome(Avalue);
 end;
 
 function TControllerPessoaJuridica.CNPJ: String;
 begin
-
+  Result := FModelPessoaJuridica.CNPJ;
 end;
 
 function TControllerPessoaJuridica.CNPJ(AValue: String): IControllerPessoaJuridica;
@@ -119,13 +102,7 @@ end;
 
 function TControllerPessoaJuridica.Endereco: String;
 begin
-
-end;
-
-function TControllerPessoaJuridica.Email(
-  AValue: String): IControllerPessoaJuridica;
-begin
-
+  Result := FModelPessoaJuridica.Endereco;
 end;
 
 function TControllerPessoaJuridica.Endereco(AValue: String): IControllerPessoaJuridica;
@@ -134,21 +111,10 @@ begin
   FModelPessoaJuridica.Endereco(AValue);
 end;
 
-function TControllerPessoaJuridica.Endereco(
-  AValue: String): IControllerPessoaJuridica;
-begin
-
-end;
-
-function TControllerPessoaJuridica.Id(
-  AValue: Integer): IControllerPessoaJuridica;
-begin
-
-end;
 
 function TControllerPessoaJuridica.Bairro: String;
 begin
-
+  Result := FModelPessoaJuridica.Bairro;
 end;
 
 function TControllerPessoaJuridica.Bairro(AValue: String): IControllerPessoaJuridica;
@@ -157,14 +123,9 @@ begin
   FModelPessoaJuridica.Bairro(AValue);
 end;
 
-function TControllerPessoaJuridica.BuscaPorId(AId: Integer): Boolean;
-begin
-
-end;
-
 function TControllerPessoaJuridica.Cidade: String;
 begin
-
+  Result := FModelPessoaJuridica.Cidade;
 end;
 
 function TControllerPessoaJuridica.Cidade(AValue: String): IControllerPessoaJuridica;
@@ -173,15 +134,9 @@ begin
   FModelPessoaJuridica.Cidade(AValue);
 end;
 
-function TControllerPessoaJuridica.CNPJ(
-  AValue: String): IControllerPessoaJuridica;
-begin
-
-end;
-
 function TControllerPessoaJuridica.UF: String;
 begin
-
+  Result := FModelPessoaJuridica.UF;
 end;
 
 function TControllerPessoaJuridica.UF(AValue: String): IControllerPessoaJuridica;
@@ -192,13 +147,7 @@ end;
 
 function TControllerPessoaJuridica.Cep: String;
 begin
-
-end;
-
-function TControllerPessoaJuridica.Celular(
-  AValue: String): IControllerPessoaJuridica;
-begin
-
+  Result := FModelPessoaJuridica.Cep;
 end;
 
 function TControllerPessoaJuridica.Cep(AValue: String): IControllerPessoaJuridica;
@@ -207,32 +156,20 @@ begin
   FModelPessoaJuridica.Cep(AValue);
 end;
 
-function TControllerPessoaJuridica.Cep(
-  AValue: String): IControllerPessoaJuridica;
-begin
-
-end;
-
-function TControllerPessoaJuridica.Cidade(
-  AValue: String): IControllerPessoaJuridica;
-begin
-
-end;
-
 function TControllerPessoaJuridica.Email: String;
 begin
-
+  Result := FModelPessoaJuridica.EMail;
 end;
 
 function TControllerPessoaJuridica.Email(AValue: String): IControllerPessoaJuridica;
 begin
   Result := Self;
-  FModelPessoaJuridica.Email(AValue);
+  FModelPessoaJuridica.EMail(AValue);
 end;
 
 function TControllerPessoaJuridica.Telefone: String;
 begin
-
+  Result := FModelPessoaJuridica.Telefone;
 end;
 
 function TControllerPessoaJuridica.Telefone(AValue: String): IControllerPessoaJuridica;
@@ -241,19 +178,9 @@ begin
   FModelPessoaJuridica.Telefone(AValue);
 end;
 
-function TControllerPessoaJuridica.UF(AValue: String): IControllerPessoaJuridica;
-begin
-
-end;
-
 function TControllerPessoaJuridica.Celular: String;
 begin
-
-end;
-
-function TControllerPessoaJuridica.Bairro(AValue: String): IControllerPessoaJuridica;
-begin
-
+  Result := FModelPessoaJuridica.Celular;
 end;
 
 function TControllerPessoaJuridica.Celular(AValue: String): IControllerPessoaJuridica;
@@ -262,20 +189,34 @@ begin
   FModelPessoaJuridica.Celular(AValue);
 end;
 
-function TControllerPessoaJuridica.Id: Integer;
+function TControllerPessoaJuridica.BuscarPorId(AValue: Integer): IControllerPessoaJuridica;
 begin
-
+  Result := Self;
+  FModelPessoaJuridica.BuscarPorId(AValue);
 end;
 
-function TControllerPessoaJuridica.ListarTodos: Boolean;
+function TControllerPessoaJuridica.ListarTodos: IControllerPessoaJuridica;
 begin
-  Result := FModelPessoaJuridica.ListarTodos;
+  Result := Self;
+  FModelPessoaJuridica.ListarTodos;
 end;
 
 function TControllerPessoaJuridica.Salvar: IControllerPessoaJuridica;
 begin
   Result := Self;
   FModelPessoaJuridica.Salvar;
+end;
+
+function TControllerPessoaJuridica.Alterar: IControllerPessoaJuridica;
+begin
+  Result := Self;
+  FModelPessoaJuridica.Alterar;
+end;
+
+function TControllerPessoaJuridica.Excluir(AValue: Integer): IControllerPessoaJuridica;
+begin
+  Result := Self;
+  FModelPessoaJuridica.Excluir(AValue);
 end;
 
 end.

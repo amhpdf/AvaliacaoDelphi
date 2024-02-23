@@ -114,7 +114,7 @@
         <DCCReference Include="src\model\Model.PessoaJuridica.pas"/>
         <DCCReference Include="src\model\Model.Vinculo.pas"/>
         <DCCReference Include="src\view\View.PessoaFisica.pas">
-            <Form>FrmCadastroCliente</Form>
+            <Form>FrmCadastroPessoaFisica</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\dao\UntConexao.pas"/>
@@ -124,6 +124,15 @@
         <DCCReference Include="src\dao\Dao.PessoaJuridica.pas"/>
         <DCCReference Include="src\model\Model.Interfaces.pas"/>
         <DCCReference Include="src\controller\Controller.Interfaces.pas"/>
+        <DCCReference Include="src\view\View.PessoaJuridica.pas">
+            <Form>FrmCadastroPessoaJuridica</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\dao\Dao.Interfaces.pas"/>
+        <DCCReference Include="src\view\View.Listagem.pas">
+            <Form>FrmListagem</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

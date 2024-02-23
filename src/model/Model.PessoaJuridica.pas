@@ -3,7 +3,7 @@ unit Model.PessoaJuridica;
 interface
 
 uses
-  Model.Interfaces, Dao.PessoaJuridica, DB;
+  Model.Interfaces, Dao.Interfaces, Dao.PessoaJuridica, DB;
 
 type
   TModelPessoaJuridica = class(TInterfacedObject, IModelPessoaJuridica)
@@ -19,7 +19,7 @@ type
       FEmail: string;
       FTelefone: string;
       FCelular: string;
-      FDAOPessoaJuridica : TDAOPessoaJuridica;
+      FDAOPessoaJuridica : IDAOPessoaJuridica;
     public
       constructor Create(ADataSource: TDataSource);
       destructor Destroy; override;
@@ -49,7 +49,10 @@ type
       function Celular: string; overload;
 
       function Salvar: IModelPessoaJuridica;
-      function ListarTodos: Boolean;
+      function ListarTodos: IModelPessoaJuridica;
+      function BuscarPorId(AValue: integer): IModelPessoaJuridica;
+      function Alterar: IModelPessoaJuridica;
+      function Excluir(AValue: Integer): IModelPessoaJuridica;
   end;
 
 implementation
@@ -58,12 +61,11 @@ implementation
 
 constructor TModelPessoaJuridica.Create(ADataSource: TDataSource);
 begin
-  FDAOPessoaJuridica := TDAOPessoaJuridica.Create(ADataSource);
+  FDAOPessoaJuridica := TDAOPessoaJuridica.New(ADataSource);
 end;
 
 destructor TModelPessoaJuridica.Destroy;
 begin
-  FDAOPessoaJuridica.DisposeOf;
   inherited Destroy;
 end;
 
@@ -193,15 +195,34 @@ begin
   Self.FCelular := AValue;
 end;
 
-function TModelPessoaJuridica.ListarTodos: Boolean;
+function TModelPessoaJuridica.BuscarPorId(AValue: integer): IModelPessoaJuridica;
 begin
-  Result := FDAOPessoaJuridica.ListarTodos;
+  Result := Self;
+  FDAOPessoaJuridica.Excluir(AValue);
+end;
+
+function TModelPessoaJuridica.ListarTodos: IModelPessoaJuridica;
+begin
+  Result := Self;
+  FDAOPessoaJuridica.ListarTodos;
 end;
 
 function TModelPessoaJuridica.Salvar: IModelPessoaJuridica;
 begin
   Result := Self;
   FDAOPessoaJuridica.Salvar(Self);
+end;
+
+function TModelPessoaJuridica.Alterar: IModelPessoaJuridica;
+begin
+  Result := Self;
+  FDAOPessoaJuridica.Alterar(Self);
+end;
+
+function TModelPessoaJuridica.Excluir(AValue: Integer): IModelPessoaJuridica;
+begin
+  Result := Self;
+  FDAOPessoaJuridica.Excluir(AValue);
 end;
 
 end.

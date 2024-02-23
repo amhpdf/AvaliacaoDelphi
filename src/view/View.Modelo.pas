@@ -11,6 +11,8 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
+  TOperacao = (opConsultar, opIncluir, opAlterar, opExcluir, opSalvar);
+
   TFrmCadastroPadrao = class(TForm)
     pnlcontainer: TPanel;
     pnlBottuns: TPanel;
@@ -28,11 +30,12 @@ type
     pnlPesquisar: TPanel;
     edtPesquisar: TEdit;
     btnPesquisar: TButton;
-    dbbGridConsultar: TDBGrid;
+    dbgConsultar: TDBGrid;
     pnlNavegador: TPanel;
     dbnGridConsultar: TDBNavigator;
     lblPesquisarCodigo: TLabel;
     dsConsultar: TDataSource;
+    btnImprimir: TButton;
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure pgcMainChange(Sender: TObject);
     procedure HabilitarBotoes(estado: Boolean);
@@ -40,6 +43,11 @@ type
     procedure btnFecharClick(Sender: TObject);
     procedure btnIncluirClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  protected
+    FOperacao: TOperacao;
   private
     { Private declarations }
     procedure LimparCampos;
@@ -55,6 +63,25 @@ implementation
 
 {$R *.dfm}
 
+procedure TFrmCadastroPadrao.FormCreate(Sender: TObject);
+begin
+  FOperacao := opConsultar;
+end;
+
+procedure TFrmCadastroPadrao.btnAlterarClick(Sender: TObject);
+begin
+  FOperacao := opAlterar;
+  HabilitarBotoes(False);
+  HabilitarCampos(True);
+  pgcMain.ActivePage := tsEdit;
+end;
+
+procedure TFrmCadastroPadrao.btnCancelarClick(Sender: TObject);
+begin
+  HabilitarBotoes(True);
+  HabilitarCampos(False);
+end;
+
 procedure TFrmCadastroPadrao.btnFecharClick(Sender: TObject);
 begin
   Close;
@@ -62,15 +89,21 @@ end;
 
 procedure TFrmCadastroPadrao.btnIncluirClick(Sender: TObject);
 begin
+  FOperacao := opIncluir;
+
   LimparCampos;
   HabilitarBotoes(False);
   HabilitarCampos(True);
+  pgcMain.ActivePage := tsEdit;
 end;
 
 procedure TFrmCadastroPadrao.btnSalvarClick(Sender: TObject);
 begin
   HabilitarBotoes(True);
   HabilitarCampos(False);
+  pgcMain.ActivePage := tsConsulta;
+
+  FOperacao := opConsultar;
 end;
 
 procedure TFrmCadastroPadrao.FormKeyPress(Sender: TObject; var Key: Char);
@@ -84,7 +117,7 @@ end;
 
 procedure TFrmCadastroPadrao.FormShow(Sender: TObject);
 begin
-  pgcMain.ActivePageIndex := 0;
+  pgcMain.ActivePage := tsConsulta;
   HabilitarCampos(False);
   HabilitarBotoes(True);
 end;
@@ -96,7 +129,6 @@ begin
   btnExcluir.Enabled  := estado;
   btnCancelar.Enabled := not estado;
   btnSalvar.Enabled   := not estado;
-  btnFechar.Enabled   := estado;
 end;
 
 procedure TFrmCadastroPadrao.LimparCampos;
@@ -112,7 +144,7 @@ end;
 
 procedure TFrmCadastroPadrao.pgcMainChange(Sender: TObject);
 begin
-  if (pgcMain.ActivePageIndex = 0) and (edtPesquisar.Enabled) then
+  if (pgcMain.ActivePage = tsConsulta) then
     edtPesquisar.SetFocus;
 end;
 
@@ -125,6 +157,9 @@ begin
     if ( (Components[i] is TEdit) or (Components[i] is TCheckBox) ) then
       TWinControl(Components[i]).Enabled := estado;
   end;
+
+  edtPesquisar.Enabled := True;
 end;
 
 end.
+

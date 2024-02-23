@@ -3,21 +3,23 @@ unit Controller.PessoaFisica;
 interface
 
 uses System.SysUtils, System.Generics.Collections, FireDAC.Comp.Client,
-     DB, 
-     Dao.PessoaFisica, 
+     DB,
+     Dao.PessoaFisica,
      Controller.Interfaces, Model.Interfaces, Model.PessoaFisica;
 
 type
+
+
   TControllerPessoaFisica = class(TInterfacedObject, IControllerPessoaFisica)
     private
       //FDAOPessoaFisica: TDAOPessoaFisica;
       FDataSource: TDataSource;
       FModelPessoaFisica: IModelPessoaFisica;
     public
-      constructor Create(ADataSource: TDataSource);
+      constructor Create(var ADataSource: TDataSource);
       destructor Destroy; override;
-      class function New(ADataSource: TDataSource): IControllerPessoaFisica;
-      
+      class function New(var ADataSource: TDataSource): IControllerPessoaFisica;
+
       function Id(AValue: Integer): IControllerPessoaFisica overload;
       function Id: integer; overload;
       function Nome(AValue: string): IControllerPessoaFisica overload;
@@ -25,19 +27,20 @@ type
       function CPF(AValue: string): IControllerPessoaFisica overload;
       function CPF: string; overload;
 
-      function BuscaPorId(AId: Integer): Boolean;
-      function ListarTodos: Boolean;
+      function BuscaPorId(AValue: Integer): IControllerPessoaFisica;
+      function ListarTodos: IControllerPessoaFisica;
       function Salvar: IControllerPessoaFisica;
+      function Alterar: IControllerPessoaFisica;
+      function Excluir(AValue: Integer): IControllerPessoaFisica;
   end;
 
 implementation
 
 { TControllerPessoaFisica }
 
-constructor TControllerPessoaFisica.Create(ADataSource: TDataSource);
+constructor TControllerPessoaFisica.Create(var ADataSource: TDataSource);
 begin
   FDataSource := ADataSource;
-//  FClienteDAO := TClienteDAO.Create(FDataSource);
   FModelPessoaFisica := TModelPessoaFisica.New(FDataSource);
 end;
 
@@ -46,14 +49,14 @@ begin
   inherited Destroy;
 end;
 
-class function TControllerPessoaFisica.New(ADataSource: TDataSource): IControllerPessoaFisica;
+class function TControllerPessoaFisica.New(var ADataSource: TDataSource): IControllerPessoaFisica;
 begin
   Result := Self.Create(ADataSource);
 end;
 
 function TControllerPessoaFisica.Id: integer;
 begin
-
+  Result := FModelPessoaFisica.Id;
 end;
 
 function TControllerPessoaFisica.Id(AValue: Integer): IControllerPessoaFisica;
@@ -64,7 +67,7 @@ end;
 
 function TControllerPessoaFisica.Nome: string;
 begin
-
+  Result := FModelPessoaFisica.Nome;
 end;
 
 function TControllerPessoaFisica.Nome(AValue: string): IControllerPessoaFisica;
@@ -75,7 +78,7 @@ end;
 
 function TControllerPessoaFisica.CPF: string;
 begin
-
+  Result := FModelPessoaFisica.CPF;
 end;
 
 function TControllerPessoaFisica.CPF(AValue: string): IControllerPessoaFisica;
@@ -84,14 +87,28 @@ begin
   FModelPessoaFisica.CPF(AValue);
 end;
 
-function TControllerPessoaFisica.BuscaPorId(AId: Integer): Boolean;
+function TControllerPessoaFisica.Alterar: IControllerPessoaFisica;
 begin
-
+  Result := Self;
+  FModelPessoaFisica.Alterar;
 end;
 
-function TControllerPessoaFisica.ListarTodos: Boolean;
+function TControllerPessoaFisica.Excluir(AValue: Integer): IControllerPessoaFisica;
 begin
-  Result := FModelPessoaFisica.ListarTodos;
+  Result := Self;
+  FModelPessoaFisica.Excluir(AValue);
+end;
+
+function TControllerPessoaFisica.BuscaPorId(AValue: Integer): IControllerPessoaFisica;
+begin
+  Result := Self;
+  FModelPessoaFisica.BuscarPorId(AValue);
+end;
+
+function TControllerPessoaFisica.ListarTodos: IControllerPessoaFisica;
+begin
+  Result := Self;
+  FModelPessoaFisica.ListarTodos;
 end;
 
 function TControllerPessoaFisica.Salvar: IControllerPessoaFisica;

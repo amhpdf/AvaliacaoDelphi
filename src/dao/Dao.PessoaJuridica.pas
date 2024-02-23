@@ -11,33 +11,38 @@ uses
   Data.DB, FireDAC.Comp.Client, FireDAC.DApt,
   FireDAC.Phys.FBDef, FireDAC.Phys.IBBase, FireDAC.Phys.FB,
 
-  UntConexao, Model.Interfaces;
+  UntConexao, Model.Interfaces, Dao.Interfaces;
 
 type
-  TDAOPessoaJuridica = class
+  TDAOPessoaJuridica = class(TInterfacedObject, IDAOPessoaJuridica)
     private
       FConexao: TConexao;
       FDQryPessoaJuridica: TFDQuery;
       FDataSource: TDataSource;
     public
-      constructor Create(ADataSource: TDataSource);
+      constructor Create(var ADataSource: TDataSource);
       destructor Destroy; override;
+      class function New(var ADataSource: TDataSource): IDAOPessoaJuridica;
 
-     function Buscar(APessoaJuridica: IModelPessoaJuridica): IModelPessoaJuridica;
-     procedure Salvar(APessoaJuridica: IModelPessoaJuridica);
-     function ListarTodos: Boolean;
+      function BuscarPorId(AValue: Integer): IDAOPessoaJuridica;
+      function Salvar(ApessoaJuridica: IModelPessoaJuridica): IDAOPessoaJuridica;
+      function ListarTodos: IDAOPessoaJuridica;
+      function Alterar(ApessoaJuridica: IModelPessoaJuridica): IDAOPEssoaJuridica;
+      function Excluir(AValue: Integer): IDAOPessoaJuridica;
   end;
 
 implementation
 
 { TDAOPessoaJuridica }
 
-constructor TDAOPessoaJuridica.Create;
+constructor TDAOPessoaJuridica.Create(var ADataSource: TDataSource);
 begin
   FConexao := TConexao.Create;
 
   FDQryPessoaJuridica := TFDQuery.Create(nil);
   FDQryPessoaJuridica.Connection := FConexao.GetConexao;
+  FDataSource := ADataSource;
+  FDataSource.DataSet := TDataSet(FDQryPessoaJuridica);
 end;
 
 destructor TDAOPessoaJuridica.Destroy;
@@ -45,9 +50,14 @@ begin
   inherited Destroy;
 end;
 
-function TDAOPessoaJuridica.Buscar(APessoaJuridica: IModelPessoaJuridica): IModelPessoaJuridica;
+class function TDAOPessoaJuridica.New(var ADataSource: TDataSource): IDAOPessoaJuridica;
 begin
-  Result := nil;
+  Result := Self.Create(ADataSource);
+end;
+
+function TDAOPessoaJuridica.BuscarPorId(AValue: Integer): IDAOPessoaJuridica;
+begin
+  Result := self;
 
   try
     FDQryPessoaJuridica.Close;
@@ -56,33 +66,16 @@ begin
     FDQryPessoaJuridica.SQL.Add('       pj.cidade, pj.uf, pj.cep, pj.email, pj.telefone, pj.celular');
     FDQryPessoaJuridica.SQL.Add('  FROM PJuridica pj');
     FDQryPessoaJuridica.SQL.Add(' WHERE pj.id = :idPessoaJuridica');
-    FDQryPessoaJuridica.ParamByName('idPessoaJuridica').AsInteger := APessoaJuridica.Id;
+    FDQryPessoaJuridica.ParamByName('idPessoaJuridica').AsInteger := AValue;
     FDQryPessoaJuridica.Open;
-
-    if not (FDQryPessoaJuridica.IsEmpty) then
-    begin
-      APessoaJuridica
-        .Nome(FDQryPessoaJuridica.FieldByName('nome').AsString)
-        .CNPJ(FDQryPessoaJuridica.FieldByName('cnpj').AsString)
-        .Endereco(FDQryPessoaJuridica.FieldByName('endereco').AsString)
-        .Bairro(FDQryPessoaJuridica.FieldByName('bairro').AsString)
-        .Cidade(FDQryPessoaJuridica.FieldByName('cidade').AsString)
-        .UF(FDQryPessoaJuridica.FieldByName('uf').AsString)
-        .Cep(FDQryPessoaJuridica.FieldByName('cep').AsString)
-        .Email(FDQryPessoaJuridica.FieldByName('email').AsString)
-        .Telefone(FDQryPessoaJuridica.FieldByName('telefone').AsString)
-        .Celular(FDQryPessoaJuridica.FieldByName('celular').AsString);
-
-      Result := APessoaJuridica;
-    end;
-  finally
-    FDQryPessoaJuridica.Close;
+  except on E: Exception do
+    raise Exception.Create('Error ao consultar: ' + E.Message);
   end;
 end;
 
-function TDAOPessoaJuridica.ListarTodos: Boolean;
+function TDAOPessoaJuridica.ListarTodos: IDAOPessoaJuridica;
 begin
- Result := False;
+  Result := Self;
 
   try
     FDQryPessoaJuridica.Close;
@@ -92,20 +85,20 @@ begin
     FDQryPessoaJuridica.SQL.Add('  FROM PJuridica pj');
     FDQryPessoaJuridica.SQL.Add(' ORDER BY pj.id');
     FDQryPessoaJuridica.Open;
-
-    Result := FDQryPessoaJuridica.IsEmpty;
-  finally
-    //FDQryPessoaJuridica.Close;
+  except on E: Exception do
+    raise Exception.Create('Error ao listar: ' + E.Message);
   end;
 end;
 
-procedure TDAOPessoaJuridica.Salvar(APessoaJuridica: IModelPessoaJuridica);
+function TDAOPessoaJuridica.Salvar(ApessoaJuridica: IModelPessoaJuridica): IDAOPessoaJuridica;
 begin
+  Result := Self;
+
   try
     FDQryPessoaJuridica.Close;
     FDQryPessoaJuridica.SQL.Clear;
-    FDQryPessoaJuridica.SQL.Add('INSERT INTO PessoaJuridica (nome, cnpj, endereco, bairro, ');
-    FDQryPessoaJuridica.SQL.Add('                 cidade, uf, cep, email, telefone, celular');
+    FDQryPessoaJuridica.SQL.Add('INSERT INTO PJuridica (nome, cnpj, endereco, bairro, ');
+    FDQryPessoaJuridica.SQL.Add('                 cidade, uf, cep, email, telefone, celular)');
     FDQryPessoaJuridica.SQL.Add('     VALUES (:nome, :cnpj, :endereco, :bairro, :cidade, :uf,');
     FDQryPessoaJuridica.SQL.Add('             :cep, :email, :telefone, :celular)');
     FDQryPessoaJuridica.ParamByName('nome').AsString := APessoaJuridica.Nome;
@@ -119,10 +112,59 @@ begin
     FDQryPessoaJuridica.ParamByName('telefone').AsString := APessoaJuridica.Telefone;
     FDQryPessoaJuridica.ParamByName('celular').AsString := APessoaJuridica.Celular;
     FDQryPessoaJuridica.ExecSQL;
-  finally
-    FDQryPessoaJuridica.Close;
+  except on E: Exception do
+    raise Exception.Create('Error ao inserir: ' + E.Message);
   end;
 end;
 
+function TDAOPessoaJuridica.Alterar(ApessoaJuridica: IModelPessoaJuridica): IDAOPEssoaJuridica;
+begin
+  Result := Self;
+
+  try
+    FDQryPessoaJuridica.Close;
+    FDQryPessoaJuridica.SQL.Clear;
+    FDQryPessoaJuridica.SQL.Add('UPDATE FROM pjuridica');
+    FDQryPessoaJuridica.SQL.Add('   SET nome = :nome');
+    FDQryPessoaJuridica.SQL.Add('       cnpj = :cnpj');
+    FDQryPessoaJuridica.SQL.Add('   endereco = :endereco');
+    FDQryPessoaJuridica.SQL.Add('     bairro = :bairro');
+    FDQryPessoaJuridica.SQL.Add('     cidade = :cidade');
+    FDQryPessoaJuridica.SQL.Add('         uf = :uf');
+    FDQryPessoaJuridica.SQL.Add('        cep = :cep');
+    FDQryPessoaJuridica.SQL.Add('      email = :email');
+    FDQryPessoaJuridica.SQL.Add('   telefone = :telefone');
+    FDQryPessoaJuridica.SQL.Add('    celular = :celular');
+    FDQryPessoaJuridica.ParamByName('nome').AsString := APessoaJuridica.Nome;
+    FDQryPessoaJuridica.ParamByName('cnpj').AsString := APessoaJuridica.CNPJ;
+    FDQryPessoaJuridica.ParamByName('endereco').AsString := APessoaJuridica.Endereco;
+    FDQryPessoaJuridica.ParamByName('bairro').AsString := APessoaJuridica.Bairro;
+    FDQryPessoaJuridica.ParamByName('cidade').AsString := APessoaJuridica.Cidade;
+    FDQryPessoaJuridica.ParamByName('uf').AsString := APessoaJuridica.UF;
+    FDQryPessoaJuridica.ParamByName('cep').AsString := APessoaJuridica.Cep;
+    FDQryPessoaJuridica.ParamByName('email').AsString := APessoaJuridica.Email;
+    FDQryPessoaJuridica.ParamByName('telefone').AsString := APessoaJuridica.Telefone;
+    FDQryPessoaJuridica.ParamByName('celular').AsString := APessoaJuridica.Celular;
+    FDQryPessoaJuridica.ExecSQL;
+  except on E: Exception do
+    raise Exception.Create('Error ao atualizar: ' + E.Message);
+  end;
+end;
+
+function TDAOPessoaJuridica.Excluir(AValue: Integer): IDAOPessoaJuridica;
+begin
+  Result := Self;
+
+  try
+    FDQryPessoaJuridica.Close;
+    FDQryPessoaJuridica.SQL.Clear;
+    FDQryPessoaJuridica.SQL.Add('DELETE FROM pfisica');
+    FDQryPessoaJuridica.SQL.Add(' WHERE id = :id');
+    FDQryPessoaJuridica.ParamByName('id').AsInteger := AValue;
+    FDQryPessoaJuridica.ExecSQL;
+  except on E: Exception do
+    raise Exception.Create('Error ao excluir: ' + E.Message);
+  end;
+end;
 end.
 

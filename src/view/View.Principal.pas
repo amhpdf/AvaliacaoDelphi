@@ -20,6 +20,8 @@ type
     procedure actPFisicaExecute(Sender: TObject);
     procedure actSairExecute(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure actPJuridicaExecute(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
   public
@@ -32,16 +34,16 @@ var
 implementation
 
 uses
-  View.PessoaFisica;
+  View.PessoaFisica, View.PessoaJuridica;
 
 
 {$R *.dfm}
 
 procedure TFrmPrincipal.actPFisicaExecute(Sender: TObject);
 var
-  FrmPessoaFisica: TFrmCadastroCliente;
+  FrmPessoaFisica: TFrmCadastroPessoaFisica;
 begin
-  FrmPessoaFisica := TFrmCadastroCliente.Create(nil);
+  FrmPessoaFisica := TFrmCadastroPessoaFisica.Create(nil);
 
   try
     FrmPessoaFisica.ShowModal;
@@ -51,9 +53,31 @@ begin
   end;
 end;
 
+procedure TFrmPrincipal.actPJuridicaExecute(Sender: TObject);
+var
+  FrmPessoaJuridica: TFrmCadastroPessoaJuridica;
+begin
+  FrmPessoaJuridica := TFrmCadastroPessoaJuridica.Create(nil);
+
+  try
+    FrmPessoaJuridica.ShowModal;
+  finally
+    if FrmPessoaJuridica <> nil then
+      FreeAndNil(FrmPessoaJuridica);
+  end;
+end;
+
 procedure TFrmPrincipal.actSairExecute(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TFrmPrincipal.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if Application.MessageBox('Sair do sistema?', 'Confirmar', MB_YESNO + MB_ICONQUESTION) = mrYes then
+    Application.Terminate
+  else
+    CanClose := False;
 end;
 
 procedure TFrmPrincipal.FormKeyPress(Sender: TObject; var Key: Char);

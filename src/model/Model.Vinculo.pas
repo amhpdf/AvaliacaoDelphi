@@ -17,11 +17,10 @@ type
       destructor Destroy; override;
       class function New(var ADataSource: TDataSource): IModelVinculo;
 
-      function IdPessoaJuridica: Integer; overload;
       function IdPessoaJuridica(AValue: Integer): IModelVinculo overload;
-
-      function IdPessoaFisica: Integer; overload;
+      function IdPessoaJuridica: Integer; overload;
       function IdPessoaFisica(AValue: Integer): IModelVinculo overload;
+      function IdPessoaFisica: Integer; overload;
 
       function Adicionar: IModelVinculo;
       function Remover(AVinculo: IModelVinculo): IModelVinculo;
@@ -62,13 +61,13 @@ end;
 
 function TModelVinculo.IdPessoaJuridica: Integer;
 begin
-  Result := Self.IdPessoaJuridica;
+  Result := Self.FIdPessoaJuridica;
 end;
 
 function TModelVinculo.IdPessoaJuridica(AValue: Integer): IModelVinculo;
 begin
   Result := Self;
-  Self.IdPessoaJuridica := AValue;
+  Self.FIdPessoaJuridica := AValue;
 end;
 
 function TModelVinculo.ListarPorPessoaJuridica(AValue: Integer): IModelVinculo;

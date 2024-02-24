@@ -59,7 +59,7 @@ type
     function IdPessoaFisica: Integer; overload;
 
     function Adicionar: IModelVinculo;
-    function Remover(AValue: Integer): IModelVinculo;
+    function Remover(AVinculo: IModelVinculo): IModelVinculo;
     function ListarPorPessoaJuridica(AValue: Integer): IModelVinculo;
   end;
 

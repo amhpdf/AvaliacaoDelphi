@@ -15,6 +15,10 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
         end
       end
       inherited tsEdit: TTabSheet
+        ExplicitLeft = 4
+        ExplicitTop = 27
+        ExplicitWidth = 496
+        ExplicitHeight = 410
         inherited pnlMainEditar: TPanel
           object lblId: TLabel
             Left = 10
@@ -232,8 +236,8 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Height = 26
               Anchors = [akTop, akRight]
               Caption = '&Adicionar'
-              Enabled = False
               TabOrder = 1
+              OnClick = btnAdicionarVinculoClick
             end
             object edtNomePessoaJuridica: TEdit
               Left = 125
@@ -304,6 +308,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Top = 4
               Width = 224
               Height = 27
+              DataSource = dsVinculo
               VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
               Anchors = [akTop, akRight]
               TabOrder = 0

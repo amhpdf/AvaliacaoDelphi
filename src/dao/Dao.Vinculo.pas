@@ -65,6 +65,7 @@ begin
     FDQryVinculo.SQL.Add('              VALUES(:idPessoaJuridica, :idPessoaFisica)');
     FDQryVinculo.ParamByName('idPessoaJuridica').AsInteger := AVinculo.IdPessoaJuridica;
     FDQryVinculo.ParamByName('idPessoaFisica').AsInteger := AVinculo.IdPessoaFisica;
+    FDQryVinculo.ExecSQL;
   except on E: Exception do
     raise Exception.Create('Error ao inserir ' + E.Message);
   end;
@@ -82,6 +83,7 @@ begin
     FDQryVinculo.SQL.Add('   AND id_pfisica = :idPessoaFisica');
     FDQryVinculo.ParamByName('idPessoaJuridica').AsInteger := AVinculo.IdPessoaJuridica;
     FDQryVinculo.ParamByName('idPessoaFisica').AsInteger := AVinculo.IdPessoaFisica;
+    FDQryVinculo.ExecSQL;
   except on E: Exception do
     raise Exception.Create('Error ao inserir ' + E.Message);
   end;

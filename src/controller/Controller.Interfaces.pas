@@ -53,13 +53,13 @@ type
 
   IControllerVinculo = interface
     ['{ACB2201A-8C86-4A53-9FA0-D6EC735F5B79}']
-    function IdPessoaJuridica: Integer; overload;
-    function IdPessoaJuridica(AValue: Integer): IControllerVinculo;
+    function IdPessoaJuridica: Integer overload;
+    function IdPessoaJuridica(AValue: Integer): IControllerVinculo overload;
     function IdPessoaFisica: Integer; overload;
-    function IdPessoaFisica(AValue: Integer): IControllerVinculo;
+    function IdPessoaFisica(AValue: Integer): IControllerVinculo overload;
 
     function Adicionar: IControllerVinculo;
-    function Remover(AVinculo: IControllerVinculo): IControllerVinculo;
+    function Remover: IControllerVinculo;
     function ListarPorPessoaJuridica(AValue: Integer): IControllerVinculo;
   end;
 

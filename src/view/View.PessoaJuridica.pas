@@ -7,7 +7,9 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, View.Modelo,
   Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
   Data.DB,
-  Controller.Interfaces, Controller.PessoaJuridica;
+  Controller.Interfaces,
+  Controller.Vinculo,
+  Controller.PessoaJuridica;
 
 type
   TFrmCadastroPessoaJuridica = class(TFrmCadastroPadrao)
@@ -54,9 +56,11 @@ type
     procedure pgcMainChange(Sender: TObject);
     procedure dsConsultarDataChange(Sender: TObject; Field: TField);
     procedure btnImprimirClick(Sender: TObject);
+    procedure btnAdicionarVinculoClick(Sender: TObject);
   private
     { Private declarations }
-    FControllerPessoaJuridica: IControllerPessoaJuridica;
+    FControllerPessoaJuridica : IControllerPessoaJuridica;
+    FControllerVinculo        : IControllerVinculo;
     procedure HabilitarEditsVinculo(AValue: Boolean);
   public
     { Public declarations }
@@ -120,6 +124,10 @@ procedure TFrmCadastroPessoaJuridica.FormCreate(Sender: TObject);
 begin
   FControllerPessoaJuridica := TControllerPessoaJuridica.New(dsConsultar);
   FControllerPessoaJuridica.ListarTodos;
+
+  FControllerVinculo := TControllerVinculo.New(dsVinculo);
+  FControllerVinculo
+    .ListarPorPessoaJuridica(dsConsultar.DataSet.FieldByName('id').AsInteger);
 end;
 
 procedure TFrmCadastroPessoaJuridica.pgcMainChange(Sender: TObject);
@@ -159,6 +167,21 @@ begin
   edtEmail.Text := dsConsultar.DataSet.FieldByName('email').AsString;
   edtTelefone.Text := dsConsultar.DataSet.FieldByName('telefone').AsString;
   edtCelular.Text := dsConsultar.DataSet.FieldByName('celular').AsString;
+end;
+
+procedure TFrmCadastroPessoaJuridica.btnAdicionarVinculoClick(Sender: TObject);
+begin
+  inherited;
+  FControllerVinculo.ListarPorPessoaJuridica(1);
+
+  if dsVinculo.DataSet.RecordCount > 0 then
+    raise Exception.Create('J existe');
+
+  FControllerVinculo
+    .IdPessoaJuridica(StrToIntDef(edtIdPessoaJuridica.Text,0))
+    .IdPessoaFisica(StrToIntDef(edtIdPessoaFisica.Text, 0))
+    .Adicionar
+    .ListarPorPessoaJuridica(StrToIntDef(edtIdPessoaJuridica.Text,0));
 end;
 
 procedure TFrmCadastroPessoaJuridica.btnImprimirClick(Sender: TObject);

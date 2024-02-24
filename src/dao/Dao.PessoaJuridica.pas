@@ -124,17 +124,18 @@ begin
   try
     FDQryPessoaJuridica.Close;
     FDQryPessoaJuridica.SQL.Clear;
-    FDQryPessoaJuridica.SQL.Add('UPDATE FROM pjuridica');
-    FDQryPessoaJuridica.SQL.Add('   SET nome = :nome');
-    FDQryPessoaJuridica.SQL.Add('       cnpj = :cnpj');
-    FDQryPessoaJuridica.SQL.Add('   endereco = :endereco');
-    FDQryPessoaJuridica.SQL.Add('     bairro = :bairro');
-    FDQryPessoaJuridica.SQL.Add('     cidade = :cidade');
-    FDQryPessoaJuridica.SQL.Add('         uf = :uf');
-    FDQryPessoaJuridica.SQL.Add('        cep = :cep');
-    FDQryPessoaJuridica.SQL.Add('      email = :email');
-    FDQryPessoaJuridica.SQL.Add('   telefone = :telefone');
+    FDQryPessoaJuridica.SQL.Add('UPDATE pjuridica');
+    FDQryPessoaJuridica.SQL.Add('   SET nome = :nome,');
+    FDQryPessoaJuridica.SQL.Add('       cnpj = :cnpj,');
+    FDQryPessoaJuridica.SQL.Add('   endereco = :endereco,');
+    FDQryPessoaJuridica.SQL.Add('     bairro = :bairro,');
+    FDQryPessoaJuridica.SQL.Add('     cidade = :cidade,');
+    FDQryPessoaJuridica.SQL.Add('         uf = :uf,');
+    FDQryPessoaJuridica.SQL.Add('        cep = :cep,');
+    FDQryPessoaJuridica.SQL.Add('      email = :email,');
+    FDQryPessoaJuridica.SQL.Add('   telefone = :telefone,');
     FDQryPessoaJuridica.SQL.Add('    celular = :celular');
+    FDQryPessoaJuridica.SQL.Add('WHERE id = :idPJuridica');
     FDQryPessoaJuridica.ParamByName('nome').AsString := APessoaJuridica.Nome;
     FDQryPessoaJuridica.ParamByName('cnpj').AsString := APessoaJuridica.CNPJ;
     FDQryPessoaJuridica.ParamByName('endereco').AsString := APessoaJuridica.Endereco;
@@ -145,6 +146,7 @@ begin
     FDQryPessoaJuridica.ParamByName('email').AsString := APessoaJuridica.Email;
     FDQryPessoaJuridica.ParamByName('telefone').AsString := APessoaJuridica.Telefone;
     FDQryPessoaJuridica.ParamByName('celular').AsString := APessoaJuridica.Celular;
+    FDQryPessoaJuridica.ParamByName('idPJuridica').AsInteger := ApessoaJuridica.Id;
     FDQryPessoaJuridica.ExecSQL;
   except on E: Exception do
     raise Exception.Create('Error ao atualizar: ' + E.Message);
@@ -158,7 +160,7 @@ begin
   try
     FDQryPessoaJuridica.Close;
     FDQryPessoaJuridica.SQL.Clear;
-    FDQryPessoaJuridica.SQL.Add('DELETE FROM pfisica');
+    FDQryPessoaJuridica.SQL.Add('DELETE FROM pjuridica');
     FDQryPessoaJuridica.SQL.Add(' WHERE id = :id');
     FDQryPessoaJuridica.ParamByName('id').AsInteger := AValue;
     FDQryPessoaJuridica.ExecSQL;

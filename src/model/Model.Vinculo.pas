@@ -25,6 +25,7 @@ type
       function Adicionar: IModelVinculo;
       function Remover(AVinculo: IModelVinculo): IModelVinculo;
       function ListarPorPessoaJuridica(AValue: Integer): IModelVinculo;
+      function ConsultarVinculo(AVinculo: IModelVinculo): IModelVinculo;
   end;
 
 implementation
@@ -86,6 +87,12 @@ function TModelVinculo.Remover(AVinculo: IModelVinculo): IModelVinculo;
 begin
   Result := Self;
   FDAOVinculo.Remover(AVinculo);
+end;
+
+function TModelVinculo.ConsultarVinculo(AVinculo: IModelVinculo): IModelVinculo;
+begin
+  Result := Self;
+  FDAOVinculo.ConsultarVinculo(AVinculo);
 end;
 
 end.

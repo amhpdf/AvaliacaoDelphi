@@ -29,6 +29,7 @@ type
     function Adicionar(AVinculo: IModelVinculo): IDAOVinculo;
     function Remover(AVinculo: IModelVinculo): IDAOVinculo;
     function ListarPorPessoaJuridica(AValue: Integer): IDAOVinculo;
+    function ConsultarVinculo(AVinculo: IModelVinculo): IDAOVinculo;
   end;
 implementation
 

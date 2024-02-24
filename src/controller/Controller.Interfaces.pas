@@ -61,6 +61,7 @@ type
     function Adicionar: IControllerVinculo;
     function Remover: IControllerVinculo;
     function ListarPorPessoaJuridica(AValue: Integer): IControllerVinculo;
+    function ConsultarVinculo: IControllerVinculo;
   end;
 
 implementation

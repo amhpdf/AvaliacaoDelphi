@@ -86,6 +86,10 @@ end;
 function TControllerPessoaJuridica.Nome(AValue: String): IControllerPessoaJuridica;
 begin
   Result := Self;
+
+  if AValue.IsEmpty then
+    raise Exception.Create('O Nome da Pessoa não pode ser vazio.');
+
   FModelPessoaJuridica.Nome(Avalue);
 end;
 
@@ -97,6 +101,10 @@ end;
 function TControllerPessoaJuridica.CNPJ(AValue: String): IControllerPessoaJuridica;
 begin
   Result := Self;
+
+  if AValue.IsEmpty then
+    raise Exception.Create('O CNPJ não pode ser vazio.');
+
   FModelPessoaJuridica.CNPJ(AValue);
 end;
 
@@ -110,7 +118,6 @@ begin
   Result := Self;
   FModelPessoaJuridica.Endereco(AValue);
 end;
-
 
 function TControllerPessoaJuridica.Bairro: String;
 begin

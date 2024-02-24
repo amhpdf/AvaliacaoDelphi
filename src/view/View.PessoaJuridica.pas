@@ -62,6 +62,7 @@ type
     procedure edtIdPessoaFisicaExit(Sender: TObject);
     procedure dsVinculoDataChange(Sender: TObject; Field: TField);
     procedure btnRemoverVinculoClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
   private
     { Private declarations }
     FControllerPessoaJuridica : IControllerPessoaJuridica;
@@ -83,6 +84,47 @@ uses
   View.Listagem;
 
 {$R *.dfm}
+
+procedure TFrmCadastroPessoaJuridica.FormCreate(Sender: TObject);
+begin
+  FControllerPessoaFisica := TControllerPessoaFisica.New(dsPessoaFisica);
+
+  FControllerPessoaJuridica := TControllerPessoaJuridica.New(dsConsultar);
+  FControllerPessoaJuridica.ListarTodos;
+
+  FControllerVinculo := TControllerVinculo.New(dsVinculo);
+  FControllerVinculo
+    .ListarPorPessoaJuridica(dsConsultar.DataSet.FieldByName('id').AsInteger);
+
+  ConfigurarGrid;
+  ConfigurarGridVinculo;
+end;
+
+procedure TFrmCadastroPessoaJuridica.pgcMainChange(Sender: TObject);
+begin
+  inherited;
+
+  if (pgcMain.ActivePage = tsConsulta) then
+    HabilitarBotoes(True);
+
+  if (pgcMain.ActivePage = tsVinculo) then
+  begin
+    HabilitarBotoes(False);
+    HabilitarEditsVinculo(False);
+
+    edtIdPessoaFisica.Text := dsVinculo.DataSet.FieldByName('id_pfisica').AsString;
+    edtNomePessoaFisica.Text := dsVinculo.DataSet.FieldByName('pessoa_juridica').AsString;
+    edtIdPessoaFisica.SetFocus;
+  end;
+end;
+
+procedure TFrmCadastroPessoaJuridica.HabilitarEditsVinculo(AValue: Boolean);
+begin
+  edtIdPessoaJuridica.Enabled   := AValue;
+  edtNomePessoaJuridica.Enabled := AValue;
+  edtIdPessoaFisica.Enabled     := not AValue;
+  edtNomePessoaFisica.Enabled   := AValue;
+end;
 
 procedure TFrmCadastroPessoaJuridica.ConfigurarGrid;
 begin
@@ -134,7 +176,7 @@ begin
       .ListarTodos
   else
     FControllerPessoaJuridica
-      .Id(0)
+      .Id(StrToIntDef(edtID.Text, 0))
       .Nome(edtNome.Text)
       .CNPJ(edtCNPJ.Text)
       .Endereco(edtEndereco.Text)
@@ -153,38 +195,24 @@ begin
   inherited;
 end;
 
-procedure TFrmCadastroPessoaJuridica.FormCreate(Sender: TObject);
+procedure TFrmCadastroPessoaJuridica.btnExcluirClick(Sender: TObject);
 begin
-  FControllerPessoaFisica := TControllerPessoaFisica.New(dsPessoaFisica);
-
-  FControllerPessoaJuridica := TControllerPessoaJuridica.New(dsConsultar);
-  FControllerPessoaJuridica.ListarTodos;
-
-  FControllerVinculo := TControllerVinculo.New(dsVinculo);
-  FControllerVinculo
-    .ListarPorPessoaJuridica(dsConsultar.DataSet.FieldByName('id').AsInteger);
-
-  ConfigurarGrid;
-  ConfigurarGridVinculo;
-end;
-
-procedure TFrmCadastroPessoaJuridica.pgcMainChange(Sender: TObject);
-begin
-  inherited;
-
-  if (pgcMain.ActivePage = tsVinculo) then
+  if (dsVinculo.DataSet.IsEmpty) then
   begin
-    HabilitarEditsVinculo(False);
-    edtIdPessoaFisica.SetFocus;
-  end;
-end;
+    ConfigurarGridVinculo;
+    if Application.MessageBox('Confirma Exclusão' , 'Atenção !!!', MB_ICONQUESTION + MB_YESNO + MB_DEFBUTTON2) = mrYes then
+    begin
+      FControllerPessoaJuridica
+        .Excluir(StrToIntDef(edtID.Text, 0))
+        .ListarTodos;
 
-procedure TFrmCadastroPessoaJuridica.HabilitarEditsVinculo(AValue: Boolean);
-begin
-  edtIdPessoaJuridica.Enabled   := AValue;
-  edtNomePessoaJuridica.Enabled := AValue;
-  edtIdPessoaFisica.Enabled     := not AValue;
-  edtNomePessoaFisica.Enabled   := AValue;
+      ConfigurarGrid;
+    end;
+  end
+  else
+    Application.MessageBox('Esta pessoa tem vículos e não pode ser excluida', 'Atenção !!!', MB_ICONWARNING + MB_OK);
+
+  inherited;
 end;
 
 procedure TFrmCadastroPessoaJuridica.dsConsultarDataChange(Sender: TObject;
@@ -206,6 +234,11 @@ begin
   edtEmail.Text    := dsConsultar.DataSet.FieldByName('email').AsString;
   edtTelefone.Text := dsConsultar.DataSet.FieldByName('telefone').AsString;
   edtCelular.Text  := dsConsultar.DataSet.FieldByName('celular').AsString;
+
+  FControllerVinculo := TControllerVinculo.New(dsVinculo);
+  FControllerVinculo
+    .ListarPorPessoaJuridica(dsConsultar.DataSet.FieldByName('id').AsInteger);
+  ConfigurarGridVinculo;
 end;
 
 procedure TFrmCadastroPessoaJuridica.dsVinculoDataChange(Sender: TObject; Field: TField);
@@ -215,8 +248,11 @@ begin
   if pgcMain.ActivePage = tsVinculo then
   begin
     btnRemoverVinculo.Enabled := not dsVinculo.DataSet.IsEmpty;
-    edtIdPessoaFisica.Text    := dsVinculo.DataSet.FieldByName('id_pfisica').AsString;
-    edtNomePessoaFisica.Text  := dsVinculo.DataSet.FieldByName('pessoa_fisica').AsString;
+    if FOperacao <> opVincular then
+    begin
+      edtIdPessoaFisica.Text    := dsVinculo.DataSet.FieldByName('id_pfisica').AsString;
+      edtNomePessoaFisica.Text  := dsVinculo.DataSet.FieldByName('pessoa_fisica').AsString;
+    end;
   end;
 end;
 
@@ -225,15 +261,24 @@ begin
   inherited;
 
   if (StrToIntDef(edtIdPessoaFisica.Text, -1) > 0) then
+  begin
     FControllerPessoaFisica
       .BuscaPorId(StrToIntDef(edtIdPessoaFisica.Text, 0));
+
+    edtNomePessoaFisica.Text := dsPessoaFisica.DataSet.FieldByName('nome').AsString;
+  end;
 end;
 
 procedure TFrmCadastroPessoaJuridica.btnAdicionarVinculoClick(Sender: TObject);
 begin
   inherited;
 
-  FControllerVinculo.ListarPorPessoaJuridica(StrToIntDef(edtIdPessoaFisica.Text, 0));
+  FOperacao := opVincular;
+
+  FControllerVinculo
+    .IdPessoaJuridica(StrToIntDef(edtIdPessoaJuridica.Text, 0))
+    .IdPessoaFisica(StrToIntDef(edtIdPessoaFisica.Text, 0))
+    .ConsultarVinculo;
 
   if not dsVinculo.DataSet.IsEmpty then
   begin
@@ -254,7 +299,8 @@ procedure TFrmCadastroPessoaJuridica.btnRemoverVinculoClick(Sender: TObject);
 begin
   inherited;
 
-  FControllerVinculo.ListarPorPessoaJuridica(StrToIntDef(edtIdPessoaFisica.Text, 0));
+//  FControllerVinculo
+//    .ListarPorPessoaJuridica(StrToIntDef(edtIdPessoaJuridica.Text, 0));
 
   FControllerVinculo
     .IdPessoaJuridica(StrToIntDef(edtIdPessoaJuridica.Text,0))

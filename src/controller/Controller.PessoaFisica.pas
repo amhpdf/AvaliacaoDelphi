@@ -71,6 +71,10 @@ end;
 function TControllerPessoaFisica.Nome(AValue: string): IControllerPessoaFisica;
 begin
   Result := Self;
+
+  if AValue.IsEmpty then
+    raise Exception.Create('O Nome da Pessoa não pode ser vazio.');
+
   FModelPessoaFisica.Nome(AValue);
 end;
 

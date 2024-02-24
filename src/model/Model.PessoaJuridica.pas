@@ -132,7 +132,7 @@ end;
 function TModelPessoaJuridica.Cidade(AValue: string): IModelPessoaJuridica;
 begin
   Result := Self;
-  Self.FCep := AValue;
+  Self.FCidade := AValue;
 end;
 
 function TModelPessoaJuridica.Cidade: string;

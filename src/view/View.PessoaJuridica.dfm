@@ -15,10 +15,6 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
         end
       end
       inherited tsEdit: TTabSheet
-        ExplicitLeft = 4
-        ExplicitTop = 27
-        ExplicitWidth = 496
-        ExplicitHeight = 410
         inherited pnlMainEditar: TPanel
           object lblId: TLabel
             Left = 10
@@ -236,7 +232,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Height = 26
               Anchors = [akTop, akRight]
               Caption = '&Adicionar'
-              TabOrder = 1
+              TabOrder = 4
               OnClick = btnAdicionarVinculoClick
             end
             object edtNomePessoaJuridica: TEdit
@@ -247,7 +243,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Anchors = [akLeft, akTop, akRight]
               CharCase = ecUpperCase
               Enabled = False
-              TabOrder = 2
+              TabOrder = 1
             end
             object edtIdPessoaFisica: TEdit
               Left = 60
@@ -256,7 +252,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               CharCase = ecUpperCase
-              TabOrder = 3
+              TabOrder = 2
               OnExit = edtIdPessoaFisicaExit
             end
             object edtNomePessoaFisica: TEdit
@@ -266,7 +262,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               CharCase = ecUpperCase
-              TabOrder = 4
+              TabOrder = 3
             end
             object btnRemoverVinculo: TButton
               Left = 381
@@ -321,9 +317,11 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
     end
   end
   inherited pnlBottuns: TPanel
+    inherited btnExcluir: TButton
+      OnClick = btnExcluirClick
+    end
     inherited btnImprimir: TButton
       OnClick = btnImprimirClick
-      ExplicitTop = 206
     end
   end
   inherited dsConsultar: TDataSource

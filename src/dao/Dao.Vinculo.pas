@@ -27,6 +27,7 @@ type
       function Adicionar(AVinculo: IModelVinculo): IDAOVinculo;
       function Remover(AVinculo: IModelVinculo): IDAOVinculo;
       function ListarPorPessoaJuridica(AValue: Integer): IDAOVinculo;
+      function ConsultarVinculo(AVinculo: IModelVinculo): IDAOVinculo;
   end;
   
 implementation
@@ -98,16 +99,38 @@ begin
   try
     FDQryVinculo.Close;
     FDQryVinculo.SQL.Clear;
-    FDQryVinculo.SQL.Add('SELECT v.id_pjuridica, pj.nome as pessoa_juridica,');
-    FDQryVinculo.SQL.Add('       v.id_pfisica, pf.nome as pessoa_fisica');
+    FDQryVinculo.SQL.Add('SELECT v.id_pjuridica, pj.nome AS pessoa_juridica,');
+    FDQryVinculo.SQL.Add('       v.id_pfisica, pf.nome AS pessoa_fisica');
     FDQryVinculo.SQL.Add('  FROM vinculo v');
     FDQryVinculo.SQL.Add(' INNER JOIN pjuridica pj ON v.id_pjuridica = pj.id');
     FDQryVinculo.SQL.Add(' INNER JOIN pfisica pf ON v.id_pfisica = pf.id');
-    FDQryVinculo.SQL.Add(' WHERE v.id_pjuridica = :idpessoajuridica');
+    FDQryVinculo.SQL.Add(' WHERE v.id_pjuridica = :idPessoaJuridica');
     FDQryVinculo.ParamByName('idPessoaJuridica').AsInteger := AValue;
     FDQryVinculo.Open;
   except on E: Exception do
-    raise Exception.Create('Error ao inserir ' + E.Message);
+    raise Exception.Create('Error ao listar ' + E.Message);
+  end;
+end;
+
+function TDAOVinculo.ConsultarVinculo(AVinculo: IModelVinculo): IDAOVinculo;
+begin
+  Result := Self;
+
+  try
+    FDQryVinculo.Close;
+    FDQryVinculo.SQL.Clear;
+    FDQryVinculo.SQL.Add('SELECT v.id_pjuridica, pj.nome AS pessoa_juridica,');
+    FDQryVinculo.SQL.Add('       v.id_pfisica, pf.nome AS pessoa_fisica');
+    FDQryVinculo.SQL.Add('  FROM vinculo v');
+    FDQryVinculo.SQL.Add(' INNER JOIN pjuridica pj ON v.id_pjuridica = pj.id');
+    FDQryVinculo.SQL.Add(' INNER JOIN pfisica pf ON v.id_pfisica = pf.id');
+    FDQryVinculo.SQL.Add(' WHERE v.id_pjuridica = :idPessoaJuridica');
+    FDQryVinculo.SQL.Add('   AND v.id_pfisica = :idPessoaFisica');
+    FDQryVinculo.ParamByName('idPessoaJuridica').AsInteger := AVinculo.IdPessoaJuridica;
+    FDQryVinculo.ParamByName('idPessoaFisica').AsInteger := AVinculo.IdPessoaFisica;
+    FDQryVinculo.Open;
+  except on E: Exception do
+    raise Exception.Create('Error ao consultar vínculo ' + E.Message);
   end;
 end;
 

@@ -30,6 +30,7 @@ type
   private
     { Private declarations }
     FControllerPessoaFisica: IControllerPessoaFisica;
+    procedure ConfigurarGrid;
   public
     { Public declarations }
   end;
@@ -51,6 +52,14 @@ begin
 
   FControllerPessoaFisica := TControllerPessoaFisica.New(dsConsultar);
   FControllerPessoaFisica.ListarTodos;
+  ConfigurarGrid;
+end;
+
+procedure TFrmCadastroPessoaFisica.ConfigurarGrid;
+begin
+  dbgConsultar.Columns.Items[0].Width := 40;
+  dbgConsultar.Columns.Items[1].Width := 280;
+  dbgConsultar.Columns.Items[2].Width := 120;
 end;
 
 procedure TFrmCadastroPessoaFisica.btnPesquisarClick(Sender: TObject);
@@ -63,6 +72,8 @@ begin
   else
     FControllerPessoaFisica
       .ListarTodos;
+
+  ConfigurarGrid;
 end;
 
 procedure TFrmCadastroPessoaFisica.btnIncluirClick(Sender: TObject);
@@ -88,6 +99,8 @@ begin
     FControllerPessoaFisica
       .Excluir(StrToIntDef(edtId.Text, 0))
       .ListarTodos;
+
+    ConfigurarGrid;
   end;
 
   inherited;
@@ -110,15 +123,18 @@ begin
       .Alterar
       .ListarTodos;
 
+  ConfigurarGrid;
+
   inherited;
 end;
 
 procedure TFrmCadastroPessoaFisica.dsConsultarDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
-  edtId.Text := dsConsultar.DataSet.FieldByName('id').AsString;
+
+  edtId.Text   := dsConsultar.DataSet.FieldByName('id').AsString;
   edtNome.Text := dsConsultar.DataSet.FieldByName('nome').AsString;
-  edtCPF.Text := dsConsultar.DataSet.FieldByName('cpf').AsString;
+  edtCPF.Text  := dsConsultar.DataSet.FieldByName('cpf').AsString;
 end;
 
 procedure TFrmCadastroPessoaFisica.btnImprimirClick(Sender: TObject);

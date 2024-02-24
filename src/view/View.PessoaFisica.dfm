@@ -13,7 +13,6 @@ inherited FrmCadastroPessoaFisica: TFrmCadastroPessoaFisica
           end
           inherited pnlNavegador: TPanel
             inherited dbnGridConsultar: TDBNavigator
-              DataSource = nil
               Hints.Strings = ()
             end
           end
@@ -81,7 +80,6 @@ inherited FrmCadastroPessoaFisica: TFrmCadastroPessoaFisica
     end
     inherited btnImprimir: TButton
       OnClick = btnImprimirClick
-      ExplicitTop = 206
     end
   end
   inherited dsConsultar: TDataSource

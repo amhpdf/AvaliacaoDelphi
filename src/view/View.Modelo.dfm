@@ -230,7 +230,6 @@ object FrmCadastroPadrao: TFrmCadastroPadrao
       Align = alTop
       Caption = '&Imprimir'
       TabOrder = 6
-      ExplicitTop = 407
     end
   end
   object dsConsultar: TDataSource

@@ -25,22 +25,12 @@ type
     function Adicionar: IControllerVinculo;
     function Remover: IControllerVinculo;
     function ListarPorPessoaJuridica(AValue: Integer): IControllerVinculo;
+    function ConsultarVinculo: IControllerVinculo;
   end;
 
 implementation
 
 { TControllerVinculo }
-
-function TControllerVinculo.Adicionar: IControllerVinculo;
-begin
-  Result := Self;
-  FModelVinculo.Adicionar;
-end;
-
-function TControllerVinculo.IdPessoaFisica: Integer;
-begin
-  Result := FModelVinculo.IdPessoaFisica;
-end;
 
 constructor TControllerVinculo.Create(var ADatasource: TDataSource);
 begin
@@ -52,6 +42,17 @@ destructor TControllerVinculo.Destroy;
 begin
 
   inherited;
+end;
+
+function TControllerVinculo.Adicionar: IControllerVinculo;
+begin
+  Result := Self;
+  FModelVinculo.Adicionar;
+end;
+
+function TControllerVinculo.IdPessoaFisica: Integer;
+begin
+  Result := FModelVinculo.IdPessoaFisica;
 end;
 
 function TControllerVinculo.IdPessoaFisica(AValue: Integer): IControllerVinculo;
@@ -86,6 +87,12 @@ function TControllerVinculo.Remover: IControllerVinculo;
 begin
   Result := Self;
   FModelVinculo.Remover(FModelVinculo);
+end;
+
+function TControllerVinculo.ConsultarVinculo: IControllerVinculo;
+begin
+  Result := Self;
+  FModelVinculo.ConsultarVinculo(FModelVinculo);
 end;
 
 end.

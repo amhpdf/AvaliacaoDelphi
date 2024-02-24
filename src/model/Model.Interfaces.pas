@@ -61,6 +61,7 @@ type
     function Adicionar: IModelVinculo;
     function Remover(AVinculo: IModelVinculo): IModelVinculo;
     function ListarPorPessoaJuridica(AValue: Integer): IModelVinculo;
+    function ConsultarVinculo(AVinculo: IModelVinculo): IModelVinculo;
   end;
 
 implementation

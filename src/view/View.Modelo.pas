@@ -11,7 +11,7 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
-  TOperacao = (opConsultar, opIncluir, opAlterar, opExcluir, opSalvar);
+  TOperacao = (opConsultar, opIncluir, opAlterar, opExcluir, opSalvar, opVincular);
 
   TFrmCadastroPadrao = class(TForm)
     pnlcontainer: TPanel;

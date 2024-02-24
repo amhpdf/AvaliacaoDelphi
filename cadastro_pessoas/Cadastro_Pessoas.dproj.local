@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/02/23 11:39:27.000.780,=C:\Users\Heitor\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 11:43:28.000.759,C:\Users\Heitor\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\cadastro_pessoas\UnPrincipal.pas</Transaction>
+    <Transaction>2024/02/23 11:43:28.000.759,C:\Users\Heitor\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\cadastro_pessoas\UnPrincipal.dfm</Transaction>
+    <Transaction>2024/02/23 11:43:35.000.911,C:\Users\Heitor\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\cadastro_pessoas\Cadastro_Pessoas.dproj</Transaction>
+    <Transaction>2024/02/23 12:01:46.000.251,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 12:01:55.000.763,D:\cadastro_pessoas\Unit1.pas=D:\cadastro_pessoas\UnDM.pas</Transaction>
+    <Transaction>2024/02/23 12:02:28.000.683,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 12:02:41.000.642,D:\cadastro_pessoas\Unit1.pas=D:\cadastro_pessoas\UnDm.pas</Transaction>
+    <Transaction>2024/02/23 12:02:41.000.642,D:\cadastro_pessoas\Unit1.dfm=D:\cadastro_pessoas\UnDm.dfm</Transaction>
+    <Transaction>2024/02/23 12:17:52.000.499,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 12:18:01.000.308,D:\cadastro_pessoas\UnDM.pas=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 12:18:01.000.308,D:\cadastro_pessoas\UnDM.dfm=D:\cadastro_pessoas\Unit1.dfm</Transaction>
+    <Transaction>2024/02/23 12:18:06.000.859,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 12:25:26.000.278,D:\cadastro_pessoas\UnCadastro.dfm=D:\cadastro_pessoas\Unit1.dfm</Transaction>
+    <Transaction>2024/02/23 12:25:26.000.278,D:\cadastro_pessoas\UnCadastro.pas=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 15:40:58.000.636,D:\cadastro_pessoas\UnCadastro.dfm=D:\cadastro_pessoas\UnCadastroFisico.dfm</Transaction>
+    <Transaction>2024/02/23 15:40:58.000.636,D:\cadastro_pessoas\UnCadastro.pas=D:\cadastro_pessoas\UnCadastroFisico.pas</Transaction>
+    <Transaction>2024/02/23 15:41:18.000.712,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 15:41:28.000.765,D:\cadastro_pessoas\Unit1.pas=D:\cadastro_pessoas\UnCadastroJuridico.pas</Transaction>
+    <Transaction>2024/02/23 15:41:28.000.765,D:\cadastro_pessoas\Unit1.dfm=D:\cadastro_pessoas\UnCadastroJuridico.dfm</Transaction>
+    <Transaction>2024/02/23 19:54:14.000.146,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 19:54:21.000.424,D:\cadastro_pessoas\UnEditar.dfm=D:\cadastro_pessoas\Unit1.dfm</Transaction>
+    <Transaction>2024/02/23 19:54:21.000.424,D:\cadastro_pessoas\UnEditar.pas=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/23 19:54:35.000.233,D:\cadastro_pessoas\UnEditarFisico.dfm=D:\cadastro_pessoas\UnEditar.dfm</Transaction>
+    <Transaction>2024/02/23 19:54:35.000.233,D:\cadastro_pessoas\UnEditarFisico.pas=D:\cadastro_pessoas\UnEditar.pas</Transaction>
+    <Transaction>2024/02/23 20:00:51.000.882,D:\cadastro_pessoas\UnEditarFisico.pas=</Transaction>
+    <Transaction>2024/02/24 10:14:55.564,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/24 10:26:15.276,D:\cadastro_pessoas\UnRelPessoaFisica.dfm=D:\cadastro_pessoas\Unit1.dfm</Transaction>
+    <Transaction>2024/02/24 10:26:15.276,D:\cadastro_pessoas\UnRelPessoaFisica.pas=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/24 11:32:20.742,=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/24 11:32:30.044,D:\cadastro_pessoas\UnRelPessoaJuridica.pas=D:\cadastro_pessoas\Unit1.pas</Transaction>
+    <Transaction>2024/02/24 11:32:30.044,D:\cadastro_pessoas\UnRelPessoaJuridica.dfm=D:\cadastro_pessoas\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

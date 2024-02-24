@@ -35,6 +35,26 @@ implementation
 
 { TDAOPessoaFisica }
 
+constructor TDAOPessoaFisica.Create(var ADataSource: TDataSource);
+begin
+  FConexao := TConexao.Create;
+
+  FDQryPessoaFisica := TFDQuery.Create(nil);
+  FDQryPessoaFisica.Connection := FConexao.GetConexao;
+  FDataSource := ADataSource;
+  FDataSource.DataSet := TDataSet(FDQryPessoaFisica);
+end;
+
+destructor TDAOPessoaFisica.Destroy;
+begin
+
+  inherited Destroy;
+end;
+
+class function TDAOPessoaFisica.New(var ADataSource: TDataSource): IDAOPessoaFisica;
+begin
+  Result := Self.Create(ADataSource)
+end;
 
 function TDAOPessoaFisica.BuscarPorId(AValue: Integer): IDAOPessoaFisica;
 begin
@@ -52,22 +72,6 @@ begin
   end;
 end;
 
-constructor TDAOPessoaFisica.Create(var ADataSource: TDataSource);
-begin
-  FConexao := TConexao.Create;
-
-  FDQryPessoaFisica := TFDQuery.Create(nil);
-  FDQryPessoaFisica.Connection := FConexao.GetConexao;
-  FDataSource := ADataSource;
-  FDataSource.DataSet := TDataSet(FDQryPessoaFisica);
-end;
-
-destructor TDAOPessoaFisica.Destroy;
-begin
-
-  inherited Destroy;
-end;
-
 function TDAOPessoaFisica.ListarTodos: IDAOPessoaFisica;
 begin
   Result := Self;
@@ -82,11 +86,6 @@ begin
   except on E: Exception do
     raise Exception.Create('Error ao listar: ' + E.Message);
   end;
-end;
-
-class function TDAOPessoaFisica.New(var ADataSource: TDataSource): IDAOPessoaFisica;
-begin
-  Result := Self.Create(ADataSource)
 end;
 
 function TDAOPessoaFisica.Salvar(APessoaFisica: IModelPessoaFisica): IDAOPessoaFisica;

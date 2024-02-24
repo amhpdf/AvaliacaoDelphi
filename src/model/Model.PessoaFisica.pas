@@ -27,7 +27,7 @@ type
 
       function Salvar: IModelPessoaFisica;
       function ListarTodos: IModelPessoaFisica;
-      function BuscarPorId(AValue: Integer) : IModelPessoaFisica;
+      function BuscarPorId(AValue: Integer): IModelPessoaFisica;
       function Alterar: IModelPessoaFisica;
       function Excluir(AValue: Integer): IModelPessoaFisica;
   end;

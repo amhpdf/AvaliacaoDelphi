@@ -4,7 +4,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
   TextHeight = 13
   inherited pnlcontainer: TPanel
     inherited pgcMain: TPageControl
-      ActivePage = tsEdit
+      ActivePage = tsVinculo
       inherited tsConsulta: TTabSheet
         inherited pnlMainConsultar: TPanel
           inherited pnlNavegador: TPanel
@@ -225,13 +225,14 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Enabled = False
               TabOrder = 0
             end
-            object Button1: TButton
+            object btnAdicionarVinculo: TButton
               Left = 381
-              Top = 8
+              Top = 5
               Width = 99
-              Height = 52
+              Height = 26
               Anchors = [akTop, akRight]
               Caption = '&Adicionar'
+              Enabled = False
               TabOrder = 1
             end
             object edtNomePessoaJuridica: TEdit
@@ -261,6 +262,16 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Anchors = [akLeft, akTop, akRight]
               CharCase = ecUpperCase
               TabOrder = 4
+            end
+            object btnRemoverVinculo: TButton
+              Left = 381
+              Top = 36
+              Width = 99
+              Height = 26
+              Anchors = [akTop, akRight]
+              Caption = '&Remover'
+              Enabled = False
+              TabOrder = 5
             end
           end
           object dbgVinculo: TDBGrid
@@ -305,6 +316,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
   inherited pnlBottuns: TPanel
     inherited btnImprimir: TButton
       OnClick = btnImprimirClick
+      ExplicitTop = 206
     end
   end
   inherited dsConsultar: TDataSource

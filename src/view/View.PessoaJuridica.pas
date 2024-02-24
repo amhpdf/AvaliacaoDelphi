@@ -38,7 +38,7 @@ type
     pnlAdicionarVinculo: TPanel;
     Label1: TLabel;
     edtIdPessoaJuridica: TEdit;
-    Button1: TButton;
+    btnAdicionarVinculo: TButton;
     dbgVinculo: TDBGrid;
     pnlNavegadorVinculo: TPanel;
     dbnGridVinculo: TDBNavigator;
@@ -47,6 +47,7 @@ type
     Label2: TLabel;
     edtNomePessoaFisica: TEdit;
     dsVinculo: TDataSource;
+    btnRemoverVinculo: TButton;
     procedure btnSalvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnIncluirClick(Sender: TObject);

@@ -17,7 +17,9 @@ uses
   Controller.Interfaces in 'src\controller\Controller.Interfaces.pas',
   View.PessoaJuridica in 'src\view\View.PessoaJuridica.pas' {FrmCadastroPessoaJuridica},
   Dao.Interfaces in 'src\dao\Dao.Interfaces.pas',
-  View.Listagem in 'src\view\View.Listagem.pas' {FrmListagem};
+  View.Listagem in 'src\view\View.Listagem.pas' {FrmListagem},
+  Dao.Vinculo in 'src\dao\Dao.Vinculo.pas',
+  Controller.Vinculo in 'src\controller\Controller.Vinculo.pas';
 
 {$R *.res}
 

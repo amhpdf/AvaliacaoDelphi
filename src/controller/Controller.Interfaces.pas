@@ -51,6 +51,18 @@ type
     function Excluir(AValue: Integer): IControllerPessoaJuridica;
   end;
 
+  IControllerVinculo = interface
+    ['{ACB2201A-8C86-4A53-9FA0-D6EC735F5B79}']
+    function IdPessoaJuridica: Integer; overload;
+    function IdPessoaJuridica(AValue: Integer): IControllerVinculo;
+    function IdPessoaFisica: Integer; overload;
+    function IdPessoaFisica(AValue: Integer): IControllerVinculo;
+
+    function Adicionar: IControllerVinculo;
+    function Remover(AVinculo: IControllerVinculo): IControllerVinculo;
+    function ListarPorPessoaJuridica(AValue: Integer): IControllerVinculo;
+  end;
+
 implementation
 
 end.

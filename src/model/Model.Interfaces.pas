@@ -6,7 +6,7 @@ type
   IModelPessoaFisica = interface
     ['{6BD57959-346E-420F-BAE7-E813B7B3F357}']
     function Id(AValue: Integer): IModelPessoaFisica overload;
-    function Id: integer; overload;
+    function Id: Integer; overload;
     function Nome(AValue: string): IModelPessoaFisica overload;
     function Nome: string; overload;
     function CPF(AValue: string): IModelPessoaFisica overload;
@@ -14,7 +14,7 @@ type
 
     function Salvar: IModelPessoaFisica;
     function ListarTodos: IModelPessoaFisica;
-    function BuscarPorId(AValue: integer) : IModelPessoaFisica;
+    function BuscarPorId(AValue: Integer) : IModelPessoaFisica;
     function Alterar: IModelPessoaFisica;
     function Excluir(AValue: Integer): IModelPessoaFisica;
   end;
@@ -22,7 +22,7 @@ type
   IModelPessoaJuridica = interface
     ['{2A5AA1BA-0CDE-4668-8EE9-DA79BFC868CF}']
     function Id(AValue: Integer): IModelPessoaJuridica overload;
-    function Id: integer; overload;
+    function Id: Integer; overload;
     function Nome(AValue: string): IModelPessoaJuridica overload;
     function Nome: string; overload;
     function CNPJ(AValue: string): IModelPessoaJuridica overload;
@@ -49,6 +49,18 @@ type
     function BuscarPorId(AValue: integer) : IModelPessoaJuridica;
     function Alterar: IModelPessoaJuridica;
     function Excluir(AValue: Integer): IModelPessoaJuridica;
+  end;
+
+  IModelVinculo = interface
+    ['{46B318FF-C6D0-4E9F-AAE2-4EC14C48D9E8}']
+    function IdPessoaJuridica(AValue: Integer): IModelVinculo overload;
+    function IdPessoaJuridica: Integer; overload;
+    function IdPessoaFisica(AValue: Integer): IModelVinculo overload;
+    function IdPessoaFisica: Integer; overload;
+
+    function Adicionar: IModelVinculo;
+    function Remover(AValue: Integer): IModelVinculo;
+    function ListarPorPessoaJuridica(AValue: Integer): IModelVinculo;
   end;
 
 implementation

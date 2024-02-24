@@ -257,6 +257,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Anchors = [akLeft, akTop, akRight]
               CharCase = ecUpperCase
               TabOrder = 3
+              OnExit = edtIdPessoaFisicaExit
             end
             object edtNomePessoaFisica: TEdit
               Left = 125
@@ -276,6 +277,7 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
               Caption = '&Remover'
               Enabled = False
               TabOrder = 5
+              OnClick = btnRemoverVinculoClick
             end
           end
           object dbgVinculo: TDBGrid
@@ -326,11 +328,16 @@ inherited FrmCadastroPessoaJuridica: TFrmCadastroPessoaJuridica
   end
   inherited dsConsultar: TDataSource
     OnDataChange = dsConsultarDataChange
-    Left = 544
-    Top = 264
+    Left = 552
+    Top = 240
   end
   object dsVinculo: TDataSource
-    Left = 544
-    Top = 320
+    OnDataChange = dsVinculoDataChange
+    Left = 552
+    Top = 296
+  end
+  object dsPessoaFisica: TDataSource
+    Left = 552
+    Top = 352
   end
 end

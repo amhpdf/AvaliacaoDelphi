@@ -82,7 +82,7 @@ begin
     FDQryPessoaJuridica.SQL.Clear;
     FDQryPessoaJuridica.SQL.Add('SELECT pj.id, pj.nome, pj.cnpj, pj.endereco, pj.bairro,');
     FDQryPessoaJuridica.SQL.Add('       pj.cidade, pj.uf, pj.cep, pj.email, pj.telefone, pj.celular');
-    FDQryPessoaJuridica.SQL.Add('  FROM PJuridica pj');
+    FDQryPessoaJuridica.SQL.Add('  FROM pjuridica pj');
     FDQryPessoaJuridica.SQL.Add(' ORDER BY pj.id');
     FDQryPessoaJuridica.Open;
   except on E: Exception do

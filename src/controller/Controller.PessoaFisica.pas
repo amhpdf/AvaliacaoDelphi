@@ -9,10 +9,8 @@ uses System.SysUtils, System.Generics.Collections, FireDAC.Comp.Client,
 
 type
 
-
   TControllerPessoaFisica = class(TInterfacedObject, IControllerPessoaFisica)
     private
-      //FDAOPessoaFisica: TDAOPessoaFisica;
       FDataSource: TDataSource;
       FModelPessoaFisica: IModelPessoaFisica;
     public
@@ -84,6 +82,10 @@ end;
 function TControllerPessoaFisica.CPF(AValue: string): IControllerPessoaFisica;
 begin
   Result := Self;
+
+  if AValue.IsEmpty then
+    raise Exception.Create('Campo CPF não pode ser vazio.');
+
   FModelPessoaFisica.CPF(AValue);
 end;
 

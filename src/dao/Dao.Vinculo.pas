@@ -62,10 +62,12 @@ begin
     FDQryVinculo.Close;
     FDQryVinculo.SQL.Clear;
     FDQryVinculo.SQL.Add('INSERT INTO vinculo (id_pjuridica, id_pfisica)');
-    FDQryVinculo.SQL.Add('              VALUES(:idPessoaJuridica, :idPessoaFisica)');
+    FDQryVinculo.SQL.Add('             VALUES (:idPessoaJuridica, :idPessoaFisica)');
     FDQryVinculo.ParamByName('idPessoaJuridica').AsInteger := AVinculo.IdPessoaJuridica;
     FDQryVinculo.ParamByName('idPessoaFisica').AsInteger := AVinculo.IdPessoaFisica;
     FDQryVinculo.ExecSQL;
+
+
   except on E: Exception do
     raise Exception.Create('Error ao inserir ' + E.Message);
   end;
@@ -78,14 +80,14 @@ begin
   try
     FDQryVinculo.Close;
     FDQryVinculo.SQL.Clear;
-    FDQryVinculo.SQL.Add('DELETE vinculo');
+    FDQryVinculo.SQL.Add('DELETE FROM vinculo');
     FDQryVinculo.SQL.Add(' WHERE id_pjuridica = :idPessoaJuridica');
     FDQryVinculo.SQL.Add('   AND id_pfisica = :idPessoaFisica');
     FDQryVinculo.ParamByName('idPessoaJuridica').AsInteger := AVinculo.IdPessoaJuridica;
     FDQryVinculo.ParamByName('idPessoaFisica').AsInteger := AVinculo.IdPessoaFisica;
     FDQryVinculo.ExecSQL;
   except on E: Exception do
-    raise Exception.Create('Error ao inserir ' + E.Message);
+    raise Exception.Create('Error ao excluir um vinculo ' + E.Message);
   end;
 end;
 
@@ -96,12 +98,12 @@ begin
   try
     FDQryVinculo.Close;
     FDQryVinculo.SQL.Clear;
-    FDQryVinculo.SQL.Add('SELECT V.ID_PJURIDICA, PJ.NOME AS PESSOA_JURIDICA, ');
-    FDQryVinculo.SQL.Add('       V.ID_PFISICA, PF.NOME AS PESSOA_FISICA      ');
-    FDQryVinculo.SQL.Add('  FROM VINCULO V                                   ');
-    FDQryVinculo.SQL.Add(' INNER JOIN PJURIDICA PJ ON V.ID_PJURIDICA= PJ.ID  ');
-    FDQryVinculo.SQL.Add(' INNER JOIN PFISICA PF ON V.ID_PFISICA = PF.ID     ');
-    FDQryVinculo.SQL.Add(' WHERE v.ID_PJURIDICA = :IDPESSOAJURIDICA          ');
+    FDQryVinculo.SQL.Add('SELECT v.id_pjuridica, pj.nome as pessoa_juridica,');
+    FDQryVinculo.SQL.Add('       v.id_pfisica, pf.nome as pessoa_fisica');
+    FDQryVinculo.SQL.Add('  FROM vinculo v');
+    FDQryVinculo.SQL.Add(' INNER JOIN pjuridica pj ON v.id_pjuridica = pj.id');
+    FDQryVinculo.SQL.Add(' INNER JOIN pfisica pf ON v.id_pfisica = pf.id');
+    FDQryVinculo.SQL.Add(' WHERE v.id_pjuridica = :idpessoajuridica');
     FDQryVinculo.ParamByName('idPessoaJuridica').AsInteger := AValue;
     FDQryVinculo.Open;
   except on E: Exception do

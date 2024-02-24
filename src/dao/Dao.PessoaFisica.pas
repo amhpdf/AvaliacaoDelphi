@@ -59,17 +59,17 @@ end;
 function TDAOPessoaFisica.BuscarPorId(AValue: Integer): IDAOPessoaFisica;
 begin
   Result := Self;
-  try
-    FDQryPessoaFisica.Close;
-    FDQryPessoaFisica.SQL.Clear;
-    FDQryPessoaFisica.SQL.Add('SELECT pf.id, pf.nome, pf.cpf');
-    FDQryPessoaFisica.SQL.Add('  FROM pfisica pf');
-    FDQryPessoaFisica.SQL.Add(' WHERE pf.id = :idPessoaFisica');
-    FDQryPessoaFisica.ParamByName('idPessoaFisica').AsInteger := AValue;
-    FDQryPessoaFisica.Open;
-  except on E: Exception do
-    raise Exception.Create('Error ao consultar: ' + E.Message);
-  end;
+
+  FDQryPessoaFisica.Close;
+  FDQryPessoaFisica.SQL.Clear;
+  FDQryPessoaFisica.SQL.Add('SELECT pf.id, pf.nome, pf.cpf');
+  FDQryPessoaFisica.SQL.Add('  FROM pfisica pf');
+  FDQryPessoaFisica.SQL.Add(' WHERE pf.id = :idPessoaFisica');
+  FDQryPessoaFisica.ParamByName('idPessoaFisica').AsInteger := AValue;
+  FDQryPessoaFisica.Open;
+
+  if FDQryPessoaFisica.IsEmpty then
+    raise Exception.Create('Pessoa Física não existe');
 end;
 
 function TDAOPessoaFisica.ListarTodos: IDAOPessoaFisica;

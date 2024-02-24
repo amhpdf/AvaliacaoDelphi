@@ -89,7 +89,7 @@ end;
 function TModelPessoaFisica.BuscarPorId(AValue: Integer): IModelPessoaFisica;
 begin
   Result := Self;
-  FDAOPessoaFisica.BuscarPorId(AValue)
+  FDAOPessoaFisica.BuscarPorId(AValue);
 end;
 
 function TModelPessoaFisica.ListarTodos: IModelPessoaFisica;

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2024/03/21 00:39:58.728,=C:\Users\artur\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 00:54:38.923,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\U_MAIN.pas=C:\Users\artur\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 00:54:38.923,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\U_MAIN.dfm=C:\Users\artur\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2024/03/21 00:54:57.578,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\avaliacao_AMHPDF.dproj=C:\Users\artur\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2024/03/21 00:58:04.010,=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 00:58:28.237,=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 00:59:44.879,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\UF_PADRAO.dfm=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.dfm</Transaction>
+    <Transaction>2024/03/21 00:59:44.879,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\UF_PADRAO.pas=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 00:59:58.165,=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 01:00:50.637,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\UF_PJ.dfm=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.dfm</Transaction>
+    <Transaction>2024/03/21 01:00:50.637,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\UF_PJ.pas=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 01:01:02.654,=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit2.pas</Transaction>
+    <Transaction>2024/03/21 01:01:35.426,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\UF_PF.pas=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit2.pas</Transaction>
+    <Transaction>2024/03/21 01:01:35.426,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\UF_PF.dfm=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit2.dfm</Transaction>
+    <Transaction>2024/03/21 01:02:33.850,=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 01:02:45.066,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\U_PREVIEW.pas=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 01:02:45.066,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\U_PREVIEW.dfm=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.dfm</Transaction>
+    <Transaction>2024/03/21 01:05:25.404,=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit2.pas</Transaction>
+    <Transaction>2024/03/21 01:05:55.293,=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+    <Transaction>2024/03/21 01:06:15.283,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\U_DM.dfm=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.dfm</Transaction>
+    <Transaction>2024/03/21 01:06:15.283,C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\U_DM.pas=C:\DEV\avaliacao_AMHPDF\AvaliacaoDelphi\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

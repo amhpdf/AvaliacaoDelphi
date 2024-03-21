@@ -1,0 +1,42 @@
+unit utils;
+
+interface
+
+uses
+
+  System.SysUtils,
+  System.Classes;
+
+
+  function lerStrings(const value: String; position: integer): String;
+  function gravastrings(const value: string; position: integer; newValue: string; const delimiterText: char = ','): string;
+
+implementation
+
+function lerStrings(const value: String; position: integer): String;
+begin
+  result := value .Split([','])[position].Replace('"' ,'');
+end;
+
+function gravastrings(const value: string; position: integer; newValue: string; const delimiterText: char): string;
+var
+  sl: TStringlist;
+begin
+  sl := nil;
+  try
+     try
+       sl := TStringList.create;
+       sl.Delimiter := delimiterText;
+       sl.DelimitedText := value;
+       sl[position] := newValue;
+       result := stringReplace(sl.DelimitedText, '"', '', [rfReplaceAll]);
+       result := '"' + stringReplace(result, ',', '","',[rfReplaceAll]) + '"';
+       freeandnil(sl);
+     except
+     end;
+  finally
+  end;
+end;
+
+
+end.

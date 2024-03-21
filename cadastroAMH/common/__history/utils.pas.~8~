@@ -1,0 +1,21 @@
+unit utils;
+
+interface
+
+uses
+
+  System.SysUtils,
+  System.Classes;
+
+
+  function lerStrings(const value: String; position: integer): String;
+
+implementation
+
+function lerStrings(const value: String; position: integer): String;
+begin
+  result := value .Split([','])[position].Replace('"' ,'');
+end;
+
+
+end.

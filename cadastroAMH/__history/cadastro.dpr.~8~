@@ -1,0 +1,17 @@
+program cadastro;
+
+uses
+  Vcl.Forms,
+  uMainAMH in 'uMainAMH.pas' {Form1},
+  uDM in 'Model\uDM.pas' {DataModule1: TDataModule},
+  uCadastro in 'View\uCadastro.pas' {Form2};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TformMain, formMain);
+  Application.CreateForm(TDataModule1,DataModule1);
+  Application.Run;
+end.

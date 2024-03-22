@@ -1,0 +1,144 @@
+unit uCadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TFrmModifyPerson = class(TForm)
+    pnlTop: TPanel;
+    labTittle: TLabel;
+    pnlBottom: TPanel;
+    labConfirmar: TLabel;
+    scrollBoxBody: TScrollBox;
+    pnlRegisterLegal: TPanel;
+    labTittleDados: TLabel;
+    pnlMenuTop: TPanel;
+    Shape1: TShape;
+    Shape5: TShape;
+    Shape2: TShape;
+    Shape17: TShape;
+    Shape15: TShape;
+    Shape6: TShape;
+    Shape7: TShape;
+    Shape28: TShape;
+    pnlBodyName: TPanel;
+    pnlEdtNameLegal: TPanel;
+    Shape4: TShape;
+    edtNameLegal: TEdit;
+    pnllabNameLegal: TPanel;
+    shpRight: TShape;
+    labName: TLabel;
+    shpLeft: TShape;
+    pnlBodyCnpj: TPanel;
+    pnlLabCnpj: TPanel;
+    shpRightCmb: TShape;
+    shpLeftCmb: TShape;
+    labCNPJ: TLabel;
+    pnlEdtCnpj: TPanel;
+    Shape3: TShape;
+    edtCnpjLegal: TEdit;
+    pnlBodyAdress: TPanel;
+    pnlEdtAdress: TPanel;
+    Shape18: TShape;
+    edtAdressLegal: TEdit;
+    pnlLabAdress: TPanel;
+    Shape19: TShape;
+    labAdressLegal: TLabel;
+    Shape20: TShape;
+    pnlBodyFone: TPanel;
+    pnlLabFone: TPanel;
+    Shape21: TShape;
+    Shape22: TShape;
+    labFone: TLabel;
+    pnlEdtFone: TPanel;
+    Shape23: TShape;
+    edtFone: TEdit;
+    pnlBodyCellfone: TPanel;
+    pnlEdtCellfone: TPanel;
+    Shape9: TShape;
+    edtCellfoneLegal: TEdit;
+    pnlLabCellfone: TPanel;
+    Shape10: TShape;
+    labCellfoneLegal: TLabel;
+    Shape11: TShape;
+    pnlBodyEmail: TPanel;
+    pnlLabEmail: TPanel;
+    Shape12: TShape;
+    Shape13: TShape;
+    labEmailLegal: TLabel;
+    pnlEdtEmail: TPanel;
+    Shape14: TShape;
+    edtEmailLegal: TEdit;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Shape24: TShape;
+    Shape26: TShape;
+    Label1: TLabel;
+    Panel4: TPanel;
+    Shape27: TShape;
+    cmbTypePerson: TComboBox;
+    pnlRegisterPhysical: TPanel;
+    Panel1: TPanel;
+    Shape8: TShape;
+    Shape16: TShape;
+    Shape25: TShape;
+    pnlBodyNamePhysical: TPanel;
+    pnlEdtNamePhysical: TPanel;
+    Shape29: TShape;
+    edtNamePhysical: TEdit;
+    pnlLabNamePhysical: TPanel;
+    Shape30: TShape;
+    LabNamePhysical: TLabel;
+    Shape31: TShape;
+    pnlBodyCpfPhysical: TPanel;
+    pnlLabCPFPhysical: TPanel;
+    Shape32: TShape;
+    Shape33: TShape;
+    LabCPFPhysical: TLabel;
+    pnEdtCPFPhysical: TPanel;
+    Shape34: TShape;
+    edtCPFPhysical: TEdit;
+    labConectionTittle: TLabel;
+    shapeBodyConnect: TShape;
+    procedure Shape15ContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure cmbTypePersonDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure scrollBoxBodyClick(Sender: TObject);
+    procedure cmbTypePersonChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmModifyPerson: TFrmModifyPerson;
+
+implementation
+
+{$R *.dfm}
+
+
+
+procedure TFrmModifyPerson.cmbTypePersonChange(Sender: TObject);
+begin
+  labConectionTittle.Visible := cmbTypePerson.ItemIndex = 1;
+  shapeBodyConnect.Visible := cmbTypePerson.ItemIndex = 1;
+end;
+
+procedure TFrmModifyPerson.cmbTypePersonDrawItem(Control: TWinControl; Index: Integer;
+  Rect: TRect; State: TOwnerDrawState);
+begin
+  cmbTypePerson.Canvas.Font.Color := $00606060;
+  cmbTypePerson.Canvas.Brush.style := bsSolid;
+  cmbTypePerson.Canvas.Brush.Color := $00F8F8F8;
+
+  cmbTypePerson.Canvas.TextOut(Rect.Left + 2, Rect.Top, cmbTypePerson.Items[Index]);
+end;
+
+
+end.

@@ -1,0 +1,12 @@
+unit utils;
+
+interface
+
+uses
+
+  System.SysUtils,
+  System.Classes,
+
+implementation
+
+end.

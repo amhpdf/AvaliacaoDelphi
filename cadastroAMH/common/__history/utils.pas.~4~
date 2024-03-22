@@ -1,0 +1,37 @@
+unit utils;
+
+interface
+
+uses
+
+  System.SysUtils,
+  System.Classes;
+
+
+  function lerStrings(s: String; Posicao: integer): String;
+
+implementation
+
+function lerStrings(s: String; Posicao: integer): String;
+var
+  Sl: tstringList;
+begin
+  Sl := nil;
+
+  try
+    Sl := tstringList.Create;
+    Sl.CommaText := s;
+
+    if Posicao > Sl.Count - 1 then
+      Result := ''
+    else
+      Result := Sl[Posicao];
+
+  finally
+    if Sl <> nil then
+      FreeAndNil(Sl);
+  end;
+end;
+
+
+end.
